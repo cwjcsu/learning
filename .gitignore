@@ -1,4 +1,17 @@
+target
+build/*
+!build/.donotdelete
+dist/*
+node_modules/*
+*.iml
+logs
+out
+*.log
+.settings
 *.class
+.git
+.idea
+.settings
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
