@@ -1,7 +1,8 @@
-package com.cwjcsu.thirdparty;/*$Id: $
+/*$Id: $
  * author                     date    comment
  * cwjcsu@gmail.com  2015年8月27日  Created
  */
+package com.cwjcsu.thirdparty;
 /**
  * 
  * @author atlas

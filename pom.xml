@@ -25,6 +25,12 @@
                 <build.env>production</build.env>
             </properties>
         </profile>
+        <profile>
+            <id>common</id>
+            <modules>
+                <module>common</module>
+            </modules>
+        </profile>
     </profiles>
     <repositories>
         <repository>

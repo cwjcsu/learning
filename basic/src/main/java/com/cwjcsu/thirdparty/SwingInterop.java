@@ -31,35 +31,16 @@ package com.cwjcsu.thirdparty;/*
  */
 
 
-
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.text.DecimalFormat;
-
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
-
-import javafx.embed.swing.JFXPanel;
-
 import javafx.application.Platform;
-import javafx.beans.InvalidationListener;
-import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
+import javafx.embed.swing.JFXPanel;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.VPos;
 import javafx.scene.Scene;
-import javafx.scene.chart.BarChart;
-import javafx.scene.chart.CategoryAxis;
-import javafx.scene.chart.Chart;
-import javafx.scene.chart.NumberAxis;
-import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -67,13 +48,13 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Priority;
-import javafx.scene.layout.Region;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+
 import javax.swing.*;
-import javax.swing.event.TableModelEvent;
-import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
+import java.awt.*;
+import java.text.DecimalFormat;
 
 /**
  * SwingInterop
@@ -172,7 +153,7 @@ public class SwingInterop extends JApplet {
         eng.load("http://www.oracle.com/us/index.html");
 
         ChangeListener handler = new ChangeListener<Number>() {
-            @Override public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
                 if (warningLabel.isVisible()) {
                     warningLabel.setVisible(false);
                 }
@@ -185,7 +166,7 @@ public class SwingInterop extends JApplet {
         Button goButton = new Button("Go");
         goButton.setDefaultButton(true);
         EventHandler<ActionEvent> goAction = new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent event) {
+            public void handle(ActionEvent event) {
                 eng.load(locationField.getText().startsWith("http://") ? locationField.getText()
                         : "http://" + locationField.getText());
             }
@@ -193,7 +174,7 @@ public class SwingInterop extends JApplet {
         goButton.setOnAction(goAction);
         locationField.setOnAction(goAction);
         eng.locationProperty().addListener(new ChangeListener<String>() {
-            @Override public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 locationField.setText(newValue);
             }
         });
