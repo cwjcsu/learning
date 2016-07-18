@@ -553,35 +553,34 @@ public class Batch {
      * @param n
      */
     public void merge(int[] nums1, int m, int[] nums2, int n) {
-        int[] num = new int[m + n];
-        int k = 0;
+        if (n == 0) {
+            return;
+        }
+        if (m == 0) {
+            System.arraycopy(nums2, 0, nums1, 0, n);
+        }
         int i = 0, j = 0;
+        int[] nums = new int[m + n];
+        int k = 0;
         while (true) {
-            if (i >= m && j >= n) {
+            if (i >= m && n - j >= 1) {
+                System.arraycopy(nums2, j, nums, k, n - j);
+                break;
+            } else if (j >= n && m - i >= 1) {
+                System.arraycopy(nums1, i, nums, k, m - i);
                 break;
             }
-            int d1 = i < m ? nums1[i] : Integer.MAX_VALUE;
-            int d2 = j < n ? nums2[j] : Integer.MAX_VALUE;
+            int d1 = nums1[i];
+            int d2 = nums2[j];
             if (d1 < d2) {
-                num[k++] = d1;
+                nums[k++] = d1;
                 i++;
-            } else if (d1 > d2) {
-                num[k++] = d2;
-                j++;
             } else {
-                if (i < m) {
-                    num[k++] = d1;
-                    i++;
-                }
-                if (j < n) {
-                    num[k++] = d2;
-                    j++;
-                }
+                nums[k++] = d2;
+                j++;
             }
         }
-        for (i = 0; i < m + n; i++) {
-            nums1[i] = num[i];
-        }
+        System.arraycopy(nums, 0, nums1, 0, m + n);
     }
 
     /**
@@ -1677,6 +1676,7 @@ public class Batch {
 
     /**
      * 142
+     *
      * @param head
      * @return
      */
@@ -1696,17 +1696,229 @@ public class Batch {
 
     /**
      * 287
+     *
      * @param nums
      * @return
      */
     public int findDuplicate(int[] nums) {
-        for(int i=0;i<nums.length;i++) {
-            for(int j=i+1;j<nums.length;j++) {
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = i + 1; j < nums.length; j++) {
                 if (nums[i] == nums[j]) {
                     return nums[i];
                 }
             }
         }
         return 0;
+    }
+
+    /**
+     * 21
+     *
+     * @param l1
+     * @param l2
+     * @return
+     */
+    public ListNode mergeTwoLists(ListNode l1, ListNode l2) {
+        if (l1 == null) {
+            return l2;
+        }
+        if (l2 == null) {
+            return l1;
+        }
+        ListNode head = null;
+        if (l1.val < l2.val) {
+            head = l1;
+            l1 = l1.next;
+        } else {
+            head = l2;
+            l2 = l2.next;
+        }
+        head.next = mergeTwoLists(l1, l2);
+        return head;
+    }
+
+    /**
+     * 148
+     * 插入排序，超时了，复杂度为O(n^2)
+     *
+     * @param head
+     * @return
+     */
+    public ListNode sortList0(ListNode head) {
+        ListNode p1 = head;
+        while (p1 != null) {
+            ListNode p2 = p1.next;
+            while (p2 != null) {
+                if (p1.val > p2.val) {
+                    int t = p1.val;
+                    p1.val = p2.val;
+                    p2.val = t;
+                }
+                p2 = p2.next;
+            }
+            p1 = p1.next;
+        }
+        return head;
+    }
+
+    /**
+     * TODO
+     * 148，快速排序？超时了
+     *
+     * @param head
+     * @return
+     */
+    public ListNode sortList(ListNode head) {
+        ListNode end = head;
+        while (end != null && end.next != null) {
+            end = end.next;
+        }
+        sortList(head, end);
+        return head;
+    }
+
+
+    public void sortList(ListNode head, ListNode end) {
+        if (head == null || end == null) {
+            return;
+        }
+        if (head == end) {
+            return;
+        }
+        ListNode slow = head;
+        ListNode fast = head.next;
+        ListNode temp = head;
+        while (fast != null && fast != end.next) {
+            if (fast.val < head.val) {
+                temp = slow;
+                slow = slow.next;
+                swap(slow, fast);
+            }
+            fast = fast.next;
+        }
+        swap(head, slow);
+        sortList(head, temp);
+        sortList(slow.next, end);
+    }
+
+    private void swap(ListNode a, ListNode b) {
+        int t = a.val;
+        a.val = b.val;
+        b.val = t;
+    }
+
+    /**
+     * 345:元音字母逆序。AEIOU,aeiou
+     *
+     * @param s
+     * @return
+     */
+    public String reverseVowels(String s) {
+        char[] array = s.toCharArray();
+        int i = 0, j = array.length - 1;
+        while (i < j) {
+            while (i < j && !isVowel(array[i])) {
+                i++;
+            }
+            while (i < j && !isVowel(array[j])) {
+                j--;
+            }
+            char t = array[i];
+            array[i] = array[j];
+            array[j] = t;
+            i++;
+            j--;
+        }
+        return new String(array);
+    }
+
+    private char[] vowels = new char[]{'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U'};
+
+    public boolean isVowel(char ch) {
+        for (char v : vowels) {
+            if (v == ch) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 24
+     *
+     * @param head
+     * @return
+     */
+    public ListNode swapPairs(ListNode head) {
+        if (head == null) {
+            return head;
+        }
+        ListNode p1 = head;
+        ListNode p2 = head.next;
+        while (p1 != null && p2 != null) {
+            int t = p1.val;
+            p1.val = p2.val;
+            p2.val = t;
+            p1 = p2.next;
+            if (p1 == null) {
+                break;
+            }
+            p2 = p1.next;
+        }
+        return head;
+    }
+
+    /**
+     * 101
+     *
+     * @param root
+     * @return
+     */
+    public boolean isSymmetric(TreeNode root) {
+        if (root == null) {
+            return true;
+        }
+        return isSymmetric(root.left, root.right);
+    }
+
+    public boolean isSymmetric(TreeNode t1, TreeNode t2) {
+        if (t1 == null && t2 == null) {
+            return true;
+        }
+        if (t1 == null && t2 != null) {
+            return false;
+        }
+        if (t1 != null && t2 == null) {
+            return false;
+        }
+        if (t1.val == t2.val) {
+            if (isSymmetric(t1.left, t2.right)) {
+                return isSymmetric(t1.right, t2.left);
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 110
+     *
+     * @param root
+     * @return
+     */
+    public boolean isBalanced(TreeNode root) {
+        return false;
+    }
+
+    public int depth(TreeNode root) {
+        if (root == null) {
+            return 0;
+        }
+        int d1 = depth(root.left);
+        int d2 = depth(root.right);
+        int dh = d1 < d2 ? d2 - d1 : d1 - d2;
+        if (dh > 1) {
+
+        }
+        return 1 + Math.max(depth(root.left), depth(root.right));
     }
 }
