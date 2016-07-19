@@ -39,7 +39,7 @@ public class BatchTest {
     private Batch b;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         b = new Batch();
     }
 
@@ -57,17 +57,18 @@ public class BatchTest {
     }
 
     @Test
-    public void testClimbStairs(){
+    public void testClimbStairs() {
         System.out.println(b.climbStairs(3));
     }
+
     @Test
-    public void testCountBits(){
+    public void testCountBits() {
         //[0,1,1,2,1,2,2,3,1,2,2,3,2,3,3,4,1]
         print(b.countBits(16));
     }
 
     @Test
-    public void testMaxProfit(){
+    public void testMaxProfit() {
 //        System.out.println(b.maxProfit(new int[]{7, 1, 5, 3, 6, 4}));//5
 
 //        System.out.println(b.maxProfit(new int[]{1,2}));
@@ -75,7 +76,12 @@ public class BatchTest {
 //        System.out.println(b.maxProfit(new int[]{1,2,4}));
 
 //        System.out.println(b.maxProfit(new int[]{2,1,2,0,1}));
-        System.out.println(b.maxProfit(new int[]{2,7,1,4,11}));
+        System.out.println(b.maxProfit(new int[]{2, 7, 1, 4, 11}));
     }
 
+    @Test
+    public void testConnectTreeLinkNode() {
+        TreeLinkNode root = new TreeLinkNode(0, new TreeLinkNode(1, new TreeLinkNode(3), new TreeLinkNode(4)), new TreeLinkNode(2, new TreeLinkNode(5), new TreeLinkNode(6)));
+        b.connect(root);
+    }
 }

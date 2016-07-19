@@ -428,22 +428,6 @@ public class Batch {
     }
 
     /**
-     * 172
-     *
-     * @param n
-     * @return
-     */
-    public int trailingZeroes(int n) {
-        int a = 1808548329;
-        // Initialize result
-        int count = 0;
-        // Keep dividing n by powers of 5 and update count
-        for (int i = 5; n / i >= 1; i *= 5)
-            count += n / i;
-        return count;
-    }
-
-    /**
      * 119
      *
      * @param rowIndex
@@ -1906,7 +1890,8 @@ public class Batch {
      * @return
      */
     public boolean isBalanced(TreeNode root) {
-        return false;
+        int depth = depth(root);
+        return depth != -1;
     }
 
     public int depth(TreeNode root) {
@@ -1914,11 +1899,259 @@ public class Batch {
             return 0;
         }
         int d1 = depth(root.left);
+        if (d1 == -1) {
+            return -1;
+        }
         int d2 = depth(root.right);
+        if (d2 == -1) {
+            return -1;
+        }
         int dh = d1 < d2 ? d2 - d1 : d1 - d2;
         if (dh > 1) {
-
+            return -1;
         }
-        return 1 + Math.max(depth(root.left), depth(root.right));
+        return 1 + Math.max(d1, d2);
+    }
+
+
+    /**
+     * 129. Sum Root to Leaf Numbers
+     *
+     * @param root
+     * @return
+     */
+    public int sumNumbers(TreeNode root) {
+        return sumNumbers(root, 0);
+    }
+
+    public int sumNumbers(TreeNode root, int v) {
+        if (root == null) {
+            return 0;
+        }
+        v = 10 * v + root.val;
+        int v2 = sumNumbers(root.left, v) + sumNumbers(root.right, v);
+        if (v2 == 0) {
+            return v;
+        } else {
+            return v2;
+        }
+    }
+
+    /**
+     * 116
+     *
+     * @param root
+     */
+    public void connect(TreeLinkNode root) {
+        if (root == null) {
+            return;
+        }
+        if (root.left != null) {
+            root.left.next = root.right;
+        }
+        if (root.right != null) {
+            root.right.next = (root.next == null ? null : root.next.left);
+        }
+        connect(root.left);
+        connect(root.right);
+    }
+
+    /**
+     * 199
+     *
+     * @param root
+     * @return
+     */
+    public List<Integer> rightSideView(TreeNode root) {
+        if (root == null) {
+            return Collections.emptyList();
+        }
+        List<Integer> list = new ArrayList<Integer>();
+        list.add(root.val);
+        return rightSideView(root, list, 1);
+    }
+
+    public List<Integer> rightSideView(TreeNode root, List<Integer> list, int depth) {
+        if (root == null) {
+            return list;
+        }
+        Integer d = null;
+        if (root.left != null) {
+            d = root.left.val;
+        }
+        if (root.right != null) {
+            d = root.right.val;
+        }
+        if (d != null) {
+            if (list.size() <= depth) {
+                list.add(d);
+            } else {
+                list.set(depth, d);
+            }
+        } else {
+            return list;
+        }
+        rightSideView(root.left, list, depth + 1);
+        return rightSideView(root.right, list, depth + 1);
+    }
+
+    /**
+     * 144 Preorder Traversal 前序遍历，根左右
+     * @param root
+     * @return
+     */
+    public List<Integer> preorderTraversal(TreeNode root) {
+        List<Integer> list = new ArrayList<Integer>();
+        return preorderTraversal(root, list);
+    }
+    public List<Integer> preorderTraversal(TreeNode root,List<Integer> list) {
+        if (root == null) {
+            return list;
+        }
+        list.add(root.val);
+        if (root.left != null) {
+            preorderTraversal(root.left, list);
+        }
+        if (root.right!=null) {
+            preorderTraversal(root.right, list);
+        }
+        return list;
+    }
+
+    /**
+     * 94,Inorder Traversal,中序遍历，左根右
+     * @param root
+     * @return
+     */
+    public List<Integer> inorderTraversal(TreeNode root) {
+        List<Integer> list = new ArrayList<Integer>();
+        return inorderTraversal(root, list);
+    }
+
+    public List<Integer> inorderTraversal(TreeNode root,List<Integer> list) {
+        if (root == null) {
+            return list;
+        }
+        if (root.left != null) {
+            inorderTraversal(root.left, list);
+        }
+        list.add(root.val);
+        if (root.right != null) {
+            inorderTraversal(root.right, list);
+        }
+        return list;
+    }
+
+    /**
+     * 145 Postorder Traversal,后序遍历，左右中
+     * @param root
+     * @return
+     */
+    public List<Integer> postorderTraversal(TreeNode root) {
+        List<Integer> list = new ArrayList<Integer>();
+        return postorderTraversal(root, list);
+    }
+
+    private List<Integer> postorderTraversal(TreeNode root, List<Integer> list) {
+        if (root == null) {
+            return list;
+        }
+        if (root.left != null) {
+            postorderTraversal(root.left, list);
+        }
+        if (root.right != null) {
+            postorderTraversal(root.right, list);
+        }
+        list.add(root.val);
+        return list;
+    }
+
+
+    /**
+     * 98
+     * @param root
+     * @return
+     */
+    public boolean isValidBST(TreeNode root) {
+        Tuple tuple = checkBST(root);
+        return tuple!=null&& tuple.valid;
+    }
+
+    static class Tuple{
+        int min;
+        int max;
+        boolean valid;
+
+        public Tuple(int min, int max, boolean valid) {
+            this.min = min;
+            this.max = max;
+            this.valid = valid;
+        }
+
+        public Tuple(boolean valid) {
+            this.valid = valid;
+        }
+    }
+    public Tuple checkBST(TreeNode root) {
+        if (root == null) {
+            return new Tuple(true);
+        }
+        Tuple left = root.left!=null?checkBST(root.left):null;
+        if (left!=null && !left.valid) {
+            return left;
+        }
+        Tuple right = root.right!=null?checkBST(root.right):null;
+        if (right != null && !right.valid) {
+            return right;
+        }
+        int max = root.val;
+        int min = root.val;
+        if (left != null ) {
+            if (left.max >= root.val) {
+                return new Tuple(false);
+            }else {
+                min = left.min;
+            }
+        }
+        if (right != null) {
+            if (right.min <= root.val) {
+                return new Tuple(false);
+            }else {
+                max = right.max;
+            }
+        }
+        return new Tuple(min, max, true);
+    }
+
+    /**
+     * 301
+     * @param s
+     * @return
+     */
+    public List<String> removeInvalidParentheses(String s) {
+        return null;
+    }
+
+    /**
+     * 172
+     *
+     * @param n
+     * @return
+     */
+    public int trailingZeroes(int n) {
+        int num = 0;
+        while (n > 0) {
+            num += n / 5;
+            n = n / 5;
+        }
+        return num;
+    }
+
+    /**
+     * @param n
+     * @return
+     */
+    public int countDigitOne(int n) {
+        return 0;
     }
 }
