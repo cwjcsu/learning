@@ -965,20 +965,6 @@ public class Batch {
     }
 
     /**
-     * 189
-     *
-     * @param nums
-     * @param k
-     */
-    public void rotate(int[] nums, int k) {
-        int[] d = new int[k];
-        int j = 0;
-        for (int i = nums.length - k - 1; i < nums.length - 1; i++) {
-            d[j++] = nums[i];
-        }
-    }
-
-    /**
      * 165
      *
      * @param version1
@@ -1997,6 +1983,7 @@ public class Batch {
 
     /**
      * 144 Preorder Traversal 前序遍历，根左右
+     *
      * @param root
      * @return
      */
@@ -2004,7 +1991,8 @@ public class Batch {
         List<Integer> list = new ArrayList<Integer>();
         return preorderTraversal(root, list);
     }
-    public List<Integer> preorderTraversal(TreeNode root,List<Integer> list) {
+
+    public List<Integer> preorderTraversal(TreeNode root, List<Integer> list) {
         if (root == null) {
             return list;
         }
@@ -2012,7 +2000,7 @@ public class Batch {
         if (root.left != null) {
             preorderTraversal(root.left, list);
         }
-        if (root.right!=null) {
+        if (root.right != null) {
             preorderTraversal(root.right, list);
         }
         return list;
@@ -2020,6 +2008,7 @@ public class Batch {
 
     /**
      * 94,Inorder Traversal,中序遍历，左根右
+     *
      * @param root
      * @return
      */
@@ -2028,7 +2017,7 @@ public class Batch {
         return inorderTraversal(root, list);
     }
 
-    public List<Integer> inorderTraversal(TreeNode root,List<Integer> list) {
+    public List<Integer> inorderTraversal(TreeNode root, List<Integer> list) {
         if (root == null) {
             return list;
         }
@@ -2044,6 +2033,7 @@ public class Batch {
 
     /**
      * 145 Postorder Traversal,后序遍历，左右中
+     *
      * @param root
      * @return
      */
@@ -2069,15 +2059,16 @@ public class Batch {
 
     /**
      * 98
+     *
      * @param root
      * @return
      */
     public boolean isValidBST(TreeNode root) {
         Tuple tuple = checkBST(root);
-        return tuple!=null&& tuple.valid;
+        return tuple != null && tuple.valid;
     }
 
-    static class Tuple{
+    static class Tuple {
         int min;
         int max;
         boolean valid;
@@ -2092,31 +2083,32 @@ public class Batch {
             this.valid = valid;
         }
     }
+
     public Tuple checkBST(TreeNode root) {
         if (root == null) {
             return new Tuple(true);
         }
-        Tuple left = root.left!=null?checkBST(root.left):null;
-        if (left!=null && !left.valid) {
+        Tuple left = root.left != null ? checkBST(root.left) : null;
+        if (left != null && !left.valid) {
             return left;
         }
-        Tuple right = root.right!=null?checkBST(root.right):null;
+        Tuple right = root.right != null ? checkBST(root.right) : null;
         if (right != null && !right.valid) {
             return right;
         }
         int max = root.val;
         int min = root.val;
-        if (left != null ) {
+        if (left != null) {
             if (left.max >= root.val) {
                 return new Tuple(false);
-            }else {
+            } else {
                 min = left.min;
             }
         }
         if (right != null) {
             if (right.min <= root.val) {
                 return new Tuple(false);
-            }else {
+            } else {
                 max = right.max;
             }
         }
@@ -2125,6 +2117,7 @@ public class Batch {
 
     /**
      * 301
+     *
      * @param s
      * @return
      */
@@ -2153,5 +2146,169 @@ public class Batch {
      */
     public int countDigitOne(int n) {
         return 0;
+    }
+
+
+    /**
+     * 347
+     *
+     * @param nums
+     * @param k
+     * @return
+     */
+    public List<Integer> topKFrequent(int[] nums, int k) {
+        Map<Integer, Frequent> map = new HashMap<Integer, Frequent>();
+        for (int d : nums) {
+            Frequent f = map.get(d);
+            if (f == null) {
+                f = new Frequent(d, 0);
+                map.put(d, f);
+            }
+            f.count++;
+        }
+        List<Frequent> values = new ArrayList<Frequent>(map.values());
+        Collections.sort(values);
+        List<Integer> list = new ArrayList<Integer>();
+        for (int i = values.size() - 1; i >= 0; i--) {
+            list.add(values.get(i).v);
+            if (list.size() >= k) {
+                break;
+            }
+        }
+        return list;
+    }
+
+    private static class Frequent implements Comparable<Frequent> {
+        int v;
+        int count;
+
+        public Frequent(int v, int count) {
+            this.v = v;
+            this.count = count;
+        }
+
+        @Override
+        public int compareTo(Frequent o) {
+            return count < o.count ? -1 : (count == o.count) ? 0 : 1;
+        }
+    }
+
+
+    /**
+     * 215
+     *
+     * @param nums
+     * @param k
+     * @return
+     */
+    public int findKthLargest(int[] nums, int k) {
+        Arrays.sort(nums);
+        return nums[nums.length - k];
+    }
+
+    /**
+     * 111
+     *
+     * @param root
+     * @return
+     */
+    public int minDepth(TreeNode root) {
+        return minDepth(root, 0);
+    }
+
+    public int minDepth(TreeNode root, int d) {
+        if (root == null) {
+            return d;
+        }
+        if (root.left == null && root.right == null) {
+            return d + 1;
+        }
+        int d1 = -1;
+        int d2 = -1;
+        if (root.left != null) {
+            d1 = minDepth(root.left, d + 1);
+        }
+        if (root.right != null) {
+            d2 = minDepth(root.right, d + 1);
+        }
+        if (d1 < 0) {
+            return d2;
+        }
+        if (d2 < 0) {
+            return d1;
+        }
+        return Math.min(d1, d2);
+    }
+
+
+    /**
+     * 38
+     *
+     * @param n
+     * @return
+     */
+    public String countAndSay(int n) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(Integer.valueOf("1"));
+        for (int k = 0; k < n - 1; k++) {
+            String line = "";
+            int count = 1;
+            int prevD = 0;
+            for (int i = 0; i < sb.length(); i++) {
+                int d = sb.charAt(i) - '0';
+                if (prevD == d) {
+                    count++;
+                } else {
+                    if (prevD != 0) {
+                        line = line + count + prevD;
+                        count = 1;
+                    }
+                    prevD = d;
+                }
+            }
+            if (prevD != 0) {
+                line = line + count + prevD;
+            }
+            sb = new StringBuilder(line);
+        }
+        return sb.toString();
+    }
+
+
+    /**
+     * 189.
+     * 算法1：
+     * 使用拷贝数组的方式；需要的空间为O(n)
+     * <p>
+     * 算法2：
+     * 假设:a1a2a3a4a5a6a7，k=3，结果：a5a6a7a1a2a3a4
+     * （1）前面n-k个数反转：a4a3a2a1a5a6a7
+     * (2) 后面k个数反转：a4a3a2a1a7a6a5
+     * (3)整个数组反转：a5a6a7a1a2a3a4，即为所求结果
+     *
+     * @param nums
+     * @param k
+     */
+    public void rotate(int[] nums, int k) {
+        int length = nums.length;
+        k = k % length;
+        if (length == 1)
+            return;
+        if (k == 0)
+            return;
+        reversal(nums, 0, length - k - 1);
+        reversal(nums, length - k, length - 1);
+        reversal(nums, 0, length - 1);
+    }
+
+    public static void reversal(int[] nums, int i, int j) {
+        int t = 0;
+        while (i < j && i >= 0) {
+            t = nums[i];
+            nums[i] = nums[j];
+            nums[j] = t;
+            i++;
+            j--;
+        }
     }
 }

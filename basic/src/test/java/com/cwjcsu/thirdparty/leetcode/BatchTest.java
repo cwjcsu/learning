@@ -83,4 +83,16 @@ public class BatchTest {
         TreeLinkNode root = new TreeLinkNode(0, new TreeLinkNode(1, new TreeLinkNode(3), new TreeLinkNode(4)), new TreeLinkNode(2, new TreeLinkNode(5), new TreeLinkNode(6)));
         b.connect(root);
     }
+
+    @Test
+    public void testMinDepth(){
+        TreeNode node = new TreeNode(1, new TreeNode(2), null);
+        System.out.println(b.minDepth(node));
+    }
+
+    @Test
+    public void testCountAndSay(){
+        System.out.println(b.countAndSay(2));
+    }
+
 }
