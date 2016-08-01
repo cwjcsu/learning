@@ -28,7 +28,6 @@ public class BatchTest {
 
     @Test
     public void testIsPowerOfThree() {
-        Batch b = new Batch();
         System.out.println(b.isPowerOfThree(0));
         System.out.println(b.isPowerOfThree(3));
         System.out.println(b.isPowerOfThree(3 * 3 * 3 * 3));
