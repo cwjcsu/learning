@@ -32,7 +32,6 @@ public class BatchTest {
 
     @Test
     public void testIsPowerOfThree() {
-        Batch b = new Batch();
         System.out.println(b.isPowerOfThree(0));
         System.out.println(b.isPowerOfThree(3));
         System.out.println(b.isPowerOfThree(3 * 3 * 3 * 3));
@@ -134,4 +133,14 @@ public class BatchTest {
         System.out.println(b.compareVersion("1.0", "1.1"));
         System.out.println(b.compareVersion("1.0", "1"));
     }
+    public void testMinDepth(){
+        TreeNode node = new TreeNode(1, new TreeNode(2), null);
+        System.out.println(b.minDepth(node));
+    }
+
+    @Test
+    public void testCountAndSay(){
+        System.out.println(b.countAndSay(2));
+    }
+
 }
