@@ -3,6 +3,10 @@ package com.cwjcsu.thirdparty.leetcode;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Created by Atlas on 2016/7/17.
  */
@@ -83,5 +87,51 @@ public class BatchTest {
     public void testConnectTreeLinkNode() {
         TreeLinkNode root = new TreeLinkNode(0, new TreeLinkNode(1, new TreeLinkNode(3), new TreeLinkNode(4)), new TreeLinkNode(2, new TreeLinkNode(5), new TreeLinkNode(6)));
         b.connect(root);
+    }
+
+    @Test
+    public void testGuessNumber() {
+        GuessGame gg = new GuessGame(6);
+        System.out.println(gg.guessNumber(10));
+    }
+
+
+    @Test
+    public void testIsValidSudou() {
+        char[][] borad = new char[][]{
+                ".87654321".toCharArray(),
+                "2........".toCharArray(),
+                "3........".toCharArray(),
+                "4........".toCharArray(),
+                "5........".toCharArray(),
+                "6........".toCharArray(),
+                "7........".toCharArray(),
+                "8........".toCharArray(),
+                "9........".toCharArray()};
+        System.out.println(b.isValidSudoku(borad));//should true
+    }
+
+
+    @Test
+    public void testIsValidSudou1() {
+        char[][] borad = new char[][]{
+                "..4...63.".toCharArray(),
+                ".........".toCharArray(),
+                "5......9.".toCharArray(),
+                "...56....".toCharArray(),
+                "4.3.....1".toCharArray(),
+                "...7.....".toCharArray(),
+                "...5.....".toCharArray(),
+                ".........".toCharArray(),
+                ".........".toCharArray()
+        };
+        System.out.println(b.isValidSudoku(borad));//should false
+    }
+
+    @Test
+    public void testCompareVersion() {
+//        System.out.println(b.compareVersion("1", "0"));
+        System.out.println(b.compareVersion("1.0", "1.1"));
+        System.out.println(b.compareVersion("1.0", "1"));
     }
 }

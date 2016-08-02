@@ -21,6 +21,10 @@ import java.util.Map;
  */
 public class LogoQrCode {
     public static void main(String[] args) throws WriterException, IOException {
+        gen("/qrcode/yf.jpg", "希望是最坏的魔鬼，因为他延迟了人类的痛苦。--尼采\nMade by 子非鱼", "qrcode-yf.png");
+    }
+
+    public static void gen2() throws WriterException, IOException {
         QrCodeProfile p = new QrCodeProfile();
         p.setText("一好友失恋，发条动态:\n“为什么听歌都会感到窒息？”\n神回复:“麻烦不要把耳机塞在鼻孔好吗”\n By the way,I miss you!");
 //        p.setLogoImage(new FileInputStream(new File("logo.png")));
@@ -33,6 +37,26 @@ public class LogoQrCode {
         p.setOutputImage(os);
         // notice that the color format is "0x(alpha: 1 byte)(RGB: 3 bytes)"
         p.setImageConfig(new MatrixToImageConfig(0xFFFF0000, 0xFFFFFFFF));
+        try {
+            generateQrCode(p);
+        }finally {
+            os.close();
+        }
+
+    }
+    public static void gen(String loggo,String text,String output) throws WriterException, IOException {
+        QrCodeProfile p = new QrCodeProfile();
+        p.setText(text);
+//        p.setLogoImage(new FileInputStream(new File("logo.png")));
+        p.setLogoImage(LogoQrCode.class.getResourceAsStream(loggo));
+        File file = new File(output);
+        if (!file.exists()) {
+            file.createNewFile();
+        }
+        OutputStream os =new FileOutputStream(file);
+        p.setOutputImage(os);
+        // notice that the color format is "0x(alpha: 1 byte)(RGB: 3 bytes)"
+        p.setImageConfig(new MatrixToImageConfig(0xFF000000, 0xFFFFFFFF));
         try {
             generateQrCode(p);
         }finally {

@@ -512,23 +512,6 @@ public class Batch {
     }
 
     /**
-     * 160
-     *
-     * @param headA
-     * @param headB
-     * @return
-     */
-    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
-        ListNode nextA = headA;
-        ListNode nextB = headB;
-        while (true) {
-            if (nextA.val == nextB.val) {
-                return nextA;
-            }
-        }
-    }
-
-    /**
      * 88
      *
      * @param nums1
@@ -976,17 +959,6 @@ public class Batch {
         for (int i = nums.length - k - 1; i < nums.length - 1; i++) {
             d[j++] = nums[i];
         }
-    }
-
-    /**
-     * 165
-     *
-     * @param version1
-     * @param version2
-     * @return
-     */
-    public int compareVersion(String version1, String version2) {
-        return -1;
     }
 
     /**
@@ -1997,6 +1969,7 @@ public class Batch {
 
     /**
      * 144 Preorder Traversal 前序遍历，根左右
+     *
      * @param root
      * @return
      */
@@ -2004,7 +1977,8 @@ public class Batch {
         List<Integer> list = new ArrayList<Integer>();
         return preorderTraversal(root, list);
     }
-    public List<Integer> preorderTraversal(TreeNode root,List<Integer> list) {
+
+    public List<Integer> preorderTraversal(TreeNode root, List<Integer> list) {
         if (root == null) {
             return list;
         }
@@ -2012,7 +1986,7 @@ public class Batch {
         if (root.left != null) {
             preorderTraversal(root.left, list);
         }
-        if (root.right!=null) {
+        if (root.right != null) {
             preorderTraversal(root.right, list);
         }
         return list;
@@ -2020,6 +1994,7 @@ public class Batch {
 
     /**
      * 94,Inorder Traversal,中序遍历，左根右
+     *
      * @param root
      * @return
      */
@@ -2028,7 +2003,7 @@ public class Batch {
         return inorderTraversal(root, list);
     }
 
-    public List<Integer> inorderTraversal(TreeNode root,List<Integer> list) {
+    public List<Integer> inorderTraversal(TreeNode root, List<Integer> list) {
         if (root == null) {
             return list;
         }
@@ -2044,6 +2019,7 @@ public class Batch {
 
     /**
      * 145 Postorder Traversal,后序遍历，左右中
+     *
      * @param root
      * @return
      */
@@ -2069,15 +2045,16 @@ public class Batch {
 
     /**
      * 98
+     *
      * @param root
      * @return
      */
     public boolean isValidBST(TreeNode root) {
         Tuple tuple = checkBST(root);
-        return tuple!=null&& tuple.valid;
+        return tuple != null && tuple.valid;
     }
 
-    static class Tuple{
+    static class Tuple {
         int min;
         int max;
         boolean valid;
@@ -2092,31 +2069,32 @@ public class Batch {
             this.valid = valid;
         }
     }
+
     public Tuple checkBST(TreeNode root) {
         if (root == null) {
             return new Tuple(true);
         }
-        Tuple left = root.left!=null?checkBST(root.left):null;
-        if (left!=null && !left.valid) {
+        Tuple left = root.left != null ? checkBST(root.left) : null;
+        if (left != null && !left.valid) {
             return left;
         }
-        Tuple right = root.right!=null?checkBST(root.right):null;
+        Tuple right = root.right != null ? checkBST(root.right) : null;
         if (right != null && !right.valid) {
             return right;
         }
         int max = root.val;
         int min = root.val;
-        if (left != null ) {
+        if (left != null) {
             if (left.max >= root.val) {
                 return new Tuple(false);
-            }else {
+            } else {
                 min = left.min;
             }
         }
         if (right != null) {
             if (right.min <= root.val) {
                 return new Tuple(false);
-            }else {
+            } else {
                 max = right.max;
             }
         }
@@ -2124,7 +2102,32 @@ public class Batch {
     }
 
     /**
+     * 111
+     *
+     * @param root
+     * @return
+     */
+    public int minDepth(TreeNode root) {
+        return 0;
+    }
+
+    public int minDepth(TreeNode root, int depth) {
+        if (root == null) {
+            return depth;
+        }
+        if (root.left == null && root.right == null) {
+            return depth + 1;
+        }
+        if (root.left != null) {
+            int d1 = minDepth(root.right, depth + 1);
+        }
+        return 0;
+    }
+
+
+    /**
      * 301
+     *
      * @param s
      * @return
      */
@@ -2153,5 +2156,216 @@ public class Batch {
      */
     public int countDigitOne(int n) {
         return 0;
+    }
+
+
+    public boolean isValidSudoku(char[][] board) {
+        Set<Integer> batch = new HashSet<Integer>();
+        for (int i = 0; i < board.length; i++) {
+            batch.clear();
+            for (int j = 0; j < board[i].length; j++) {
+                char ch = board[i][j];
+                if (!isValid(batch, ch)) {
+                    return false;
+                }
+            }
+        }
+        for (int i = 0; i < 9; i++) {
+            batch.clear();
+            for (int j = 0; j < 9; j++) {
+                char ch = board[j][i];
+                if (!isValid(batch, ch)) {
+                    return false;
+                }
+            }
+        }
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                batch.clear();
+                for (int m = 3 * i; m < 3 * i + 3; m++) {
+                    for (int n = 3 * j; n < 3 * j + 3; n++) {
+                        if (!isValid(batch, board[m][n])) {
+                            return false;
+                        }
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    private boolean isValid(Set<Integer> batch, char ch) {
+        if (ch == '.') {
+            return true;
+        }
+        try {
+            if (ch < '1' || ch > '9') {
+                return false;
+            }
+            if (batch.contains(ch)) {
+                return false;
+            }
+            batch.add((int) ch);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * 223
+     *
+     * @param A
+     * @param B
+     * @param C
+     * @param D
+     * @param E
+     * @param F
+     * @param G
+     * @param H
+     * @return
+     */
+    public int computeArea(int A, int B, int C, int D, int E, int F, int G, int H) {
+        int together;
+        if (C <= E || A >= G || B >= H || D <= F) {
+            together = 0;
+        } else {
+            int x = Math.min(C, G) - Math.max(A, E);
+            int y = Math.min(D, H) - Math.max(B, F);
+            together = x * y;
+        }
+        return (C - A) * (D - B) + (G - E) * (H - F) - together;
+    }
+
+    /**
+     * 160
+     *
+     * @param headA
+     * @param headB
+     * @return
+     */
+    public ListNode getIntersectionNode(ListNode headA, ListNode headB) {
+//        ListNode l1 = headA;
+//        ListNode l2 = headB;
+//        while (true) {
+//            if (l1 == null && l2 != null) {
+//                return null;
+//            }
+//            if (l1 != null && l2 == null) {
+//                return null;
+//            }
+//            if (l1 == null && l2 == null) {
+//                return null;
+//            }
+//            l1 = l1.next;
+//            if (l1 == null) {
+//                l1 = headB;
+//            }
+//            l2 = l2.next;
+//            if (l2 == null) {
+//                l2 = headA;
+//            }
+//        }
+//        if (l1 == l2) {
+//            return  l1;
+//        }
+        return null;
+    }
+
+    /**
+     * 165
+     * @param version1
+     * @param version2
+     * @return
+     */
+    public int compareVersion(String version1, String version2) {
+        String[] v1s = version1.split("\\.");
+        String[] v2s = version2.split("\\.");
+        int L = Math.max(v1s.length, v2s.length);
+        for (int i = 0; i < L; i++) {
+            String v1 = i < v1s.length ? v1s[i] : null;
+            String v2 = i < v2s.length ? v2s[i] : null;
+            int r1 = v1 != null ? Integer.parseInt(v1) : 0;
+            int r2 = v2 != null ? Integer.parseInt(v2) : 0;
+            if (r1 < r2) {
+                return -1;
+            } else if (r1 > r2) {
+                return 1;
+            } else {
+                continue;
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * 136
+     * @param nums
+     * @return
+     */
+    public int singleNumber(int[] nums) {
+        Set<Integer> set = new HashSet<Integer>();
+        for (int d : nums) {
+            if (set.contains(d)) {
+                set.remove(d);
+            }else{
+                set.add(d);
+            }
+        }
+        return set.iterator().next();
+    }
+
+    /**
+     * 136A
+     * @param  A
+     * @return
+     */
+    public int singleNumber_1(int[] A) {
+        int result = A[0];
+        for(int i = 1; i < A.length; i++){
+            result = result ^ A[i];
+        }
+        return result;
+    }
+
+    /**
+     * 260
+     * @param nums
+     * @return
+     */
+    public int[] singleNumber2(int[] nums) {
+        Set<Integer> set = new HashSet<Integer>();
+        for (int d : nums) {
+            if (set.contains(d)) {
+                set.remove(d);
+            }else{
+                set.add(d);
+            }
+        }
+        int[] data = new int[set.size()];
+        int i=0;
+        for (Integer d : set) {
+            data[i++]=d;
+        }
+        return data;
+    }
+
+    /**
+     * 238
+     *
+     * 这道题给定我们一个数组，让我们返回一个新数组，对于每一个位置上的数是其他位置上数的乘积，
+     * 并且限定了时间复杂度O(n)，并且不让我们用除法。如果让用除法的话，
+     * 那这道题就应该属于Easy，因为可以先遍历一遍数组求出所有数字之积，
+     * 然后除以对应位置的上的数字。但是这道题禁止我们使用除法，那么我们只能另辟蹊径。
+     * 我们可以先遍历一遍数组，每一个位置上存之前所有数字的乘积。
+     * 那么一遍下来，最后一个位置上的数字是之前所有数字之积，是符合题目要求的，只是前面所有的数还需要在继续乘。
+     * 我们这时候再从后往前扫描，每个位置上的数在乘以后面所有数字之积，
+     * 对于最后一个位置来说，由于后面没有数字了，所以乘以1就行。
+     * @param nums
+     * @return
+     */
+    public int[] productExceptSelf(int[] nums) {
+        return null;
     }
 }
