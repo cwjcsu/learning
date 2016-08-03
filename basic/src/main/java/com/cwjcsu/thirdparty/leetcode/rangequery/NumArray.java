@@ -5,7 +5,7 @@
 package com.cwjcsu.thirdparty.leetcode.rangequery;
 
 /**
- * 
+ *  303
  * @author atlas
  *
  */

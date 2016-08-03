@@ -118,35 +118,7 @@ public class Batch {
     }
 
 
-    static Map<Integer, Integer> stairCache = new HashMap<Integer, Integer>();
 
-    static {
-        stairCache.put(1, 1);
-        stairCache.put(2, 2);
-    }
-
-    /**
-     * 70
-     * OK
-     *
-     * @param n
-     * @return
-     */
-    public int climbStairs(int n) {
-        if (n == 1) {
-            return 1;
-        }
-        if (n == 2) {
-            return 2;
-        }
-        Integer step = stairCache.get(n);
-        if (step != null) {
-            return step;
-        }
-        int s = climbStairs(n - 1) + climbStairs(n - 2);
-        stairCache.put(n, s);
-        return s;
-    }
 
     /**
      * 202

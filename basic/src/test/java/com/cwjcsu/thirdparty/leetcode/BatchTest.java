@@ -41,9 +41,12 @@ public class BatchTest {
 
     private Batch b;
 
+    private DynamicProgramming dp = null;
+
     @Before
     public void setUp() {
         b = new Batch();
+        dp = new DynamicProgramming();
     }
 
 
@@ -61,7 +64,7 @@ public class BatchTest {
 
     @Test
     public void testClimbStairs() {
-        System.out.println(b.climbStairs(3));
+        System.out.println(dp.climbStairs(3));
     }
 
     @Test
@@ -133,14 +136,73 @@ public class BatchTest {
         System.out.println(b.compareVersion("1.0", "1.1"));
         System.out.println(b.compareVersion("1.0", "1"));
     }
-    public void testMinDepth(){
+
+    public void testMinDepth() {
         TreeNode node = new TreeNode(1, new TreeNode(2), null);
         System.out.println(b.minDepth(node));
     }
 
     @Test
-    public void testCountAndSay(){
+    public void testCountAndSay() {
         System.out.println(b.countAndSay(2));
     }
 
+
+    @Test
+    public void testWiggleMaxLength() {
+        int[] nums = new int[]{3, 3, 3, 2, 5};
+        System.out.println(dp.wiggleMaxLength(nums));
+    }
+
+    @Test
+    public void testUniquePaths() {
+        System.out.println(dp.uniquePaths(2, 2));
+        System.out.println(dp.uniquePaths(3, 3));
+        System.out.println(dp.uniquePaths(3, 7));
+    }
+
+    @Test
+    public void testUniquePathsWithObstacles() {
+        int[][] obstacleGrid = new int[][]{
+                new int[]{0, 0, 0},
+                new int[]{0, 1, 0},
+                new int[]{0, 0, 0},
+        };
+        obstacleGrid = new int[][]{
+                {0},
+                {0}
+        };
+
+        obstacleGrid = new int[][]{
+                {1},
+        };
+        obstacleGrid = new int[][]{
+                {1},
+                {0}
+        };
+
+        System.out.println(dp.uniquePathsWithObstacles(obstacleGrid));
+    }
+
+
+    @Test
+    public void testMinPathSum() {
+        int[][] grid =
+                {{1, 3, 1}, {1, 5, 1}, {4, 2, 1}};
+        System.out.println(dp.minPathSum(grid));
+    }
+
+    @Test
+    public void testCalculateMinimumHP() {
+        int[][] grid =
+                {{-2, -3, 3}, {-5, -10, 1}, {10, 30, -5}};
+        System.out.println(dp.calculateMinimumHP(grid));//7
+
+        grid = new int[][]{{3, -20, 30}, {-3, 4, 0}};
+        System.out.println(dp.calculateMinimumHP(grid));//1
+        grid = new int[][]{{1, -3, 3}, {0, -2, 0}, {-3, -3, -3}};
+        System.out.println(dp.calculateMinimumHP(grid));//3
+
+
+    }
 }
