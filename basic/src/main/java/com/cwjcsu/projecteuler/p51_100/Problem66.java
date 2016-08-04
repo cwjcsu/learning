@@ -98,8 +98,7 @@ public class Problem66 {
 	/**
 	 * if d = 181,overflow,
 	 * 
-	 * �㷨
-	 * 
+	 *
 	 * @param d
 	 * @return
 	 */

@@ -5,10 +5,10 @@ import java.util.BitSet;
 import com.cwjcsu.projecteuler.util.Util;
 
 /**
- * ����http://www.mathblog.dk/project-euler-131-primes-perfect-cube/
- * ���Ƶ��������Եó�p=(i+1)<sup>3</sup>-i<sup>3</sup>, ����i�ĵ����ģ�
- * ��i=577ʱ�����Եõ�p=1000519��������Ҫ���i=1��577��
- * 
+ * 根据http://www.mathblog.dk/project-euler-131-primes-perfect-cube/
+ * 的推导，最后可以得出p=(i+1)<sup>3</sup>-i<sup>3</sup>, 关于i的递增的，
+ * 当i=577时，可以得到p=1000519，所以需要检查i=1到577。
+ *
  * @author atlas
  * @date 2013-4-28
  */

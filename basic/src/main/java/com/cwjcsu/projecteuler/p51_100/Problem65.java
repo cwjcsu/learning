@@ -14,7 +14,7 @@ public class Problem65 {
 		BigInteger d = BigInteger.ONE;
 		BigInteger t = null;
 		long i = N;
-		while (i > 0) {// ����ǡ�ü��㵽2+1/...��1/... +1�����Լ������Ҫ+1��
+		while (i > 0) {// 这里恰好计算到2+1/...中1/... +1，所以计算完后还要+1，
 			int c = 1;
 			if (i % 3 == 0) {
 				c = (int) (2 * i / 3);
@@ -24,7 +24,7 @@ public class Problem65 {
 			n = t;
 			i--;
 		}
-		d = d.add(n);// ���+1
+		d = d.add(n);// 最后+1
 		System.out.println("d/n:" + d + "/" + n);
 		return Util.sumOfDigits(d.toString());
 	}

@@ -1,5 +1,6 @@
 package com.cwjcsu.projecteuler.dp;
 
+
 public class DP9 {
 	public static void main(String[] args) {
 		int[] v = new int[] { 800, 400, 300, 400, 200 };
@@ -15,7 +16,7 @@ public class DP9 {
 		v[0] = w[0] = 0;
 		System.arraycopy(v1, 0, v, 1, v1.length);
 		System.arraycopy(w1, 0, w, 1, w1.length);
-		// V[i][j] ��ʾ��ǰi����Ʒװ������Ϊj�ı����л�õ�����ֵ
+		// V[i][j] 表示把前i个物品装入容量为j的背包中获得的最大价值
 		int[][] V = new int[N + 1][C + 1];
 		boolean[] x = new boolean[N];
 		int i = 0, j = 0;
@@ -46,13 +47,13 @@ public class DP9 {
 	}
 
 	/**
-	 * 
+	 *
 	 * @param v
-	 *            �۸�
+	 *            价格
 	 * @param w
-	 *            ��Ҫ��
+	 *            重要度
 	 * @param N
-	 *            ��Ǯ��
+	 *            总钱数
 	 * @return
 	 */
 	public static int dp(int[] v, int[] w, int N) {

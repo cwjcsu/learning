@@ -3,8 +3,8 @@ package com.cwjcsu.projecteuler.p51_100;
 import com.cwjcsu.projecteuler.util.Util;
 
 /**
- * �ܺõ��㷨��http://www.mathblog.dk/project-euler-91-right-angle-triangles-quadrant/
- * 
+ * 很好的算法：http://www.mathblog.dk/project-euler-91-right-angle-triangles-quadrant/
+ *
  * @author atlas
  * @date 2013-4-26
  */

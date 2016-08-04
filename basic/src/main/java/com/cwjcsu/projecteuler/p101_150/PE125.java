@@ -6,11 +6,11 @@ import com.cwjcsu.projecteuler.util.Util;
 
 /**
  http://www.mathblog.dk/project-euler-125-square-sums-palindromic/
- ����1���������л�������Ȼ���ж��Ƿ���ƽ���ͣ�
- ����2��������������ƽ���ͣ��ж��Ƿ��ǻ�����
- 
- ����2��������
- * 
+ 方案1：生成所有回文数，然后判断是否是平方和，
+ 方案2：生成所有数的平方和，判断是否是回文数
+
+ 方案2，暴力法
+ *
  * @author atlas
  * @date 2013-4-26
  */

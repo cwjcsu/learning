@@ -1,7 +1,7 @@
 package com.cwjcsu.projecteuler.p1_50;
 public class Problem8 {
 	/**
-	 * ������
+	 * // 暴力法
 	 * 364
 	 * @param args
 	 */

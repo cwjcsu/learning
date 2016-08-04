@@ -11,7 +11,7 @@ public class Problem10 {
 		System.out.println(Util.sum(primes));
 	}
 
-	// ������2000003
+	// 暴力法 2000003
 	public static long sumOfPrimesBlow(long e) {
 		if (e < 2) {
 			return 0;

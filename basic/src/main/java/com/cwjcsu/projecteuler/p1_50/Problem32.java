@@ -13,7 +13,7 @@ import com.cwjcsu.projecteuler.util.Util;
  */
 public class Problem32 {
 	/**
-	 * ֻ������a 1 digit number times a 4 digit number or a 2 digit number times a 3
+	 * ֻ只可能是a 1 digit number times a 4 digit number or a 2 digit number times a 3
 	 * digit number
 	 * 
 	 * @param args

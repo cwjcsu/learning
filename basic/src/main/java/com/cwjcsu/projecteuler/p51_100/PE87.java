@@ -5,9 +5,9 @@ import java.util.BitSet;
 import com.cwjcsu.projecteuler.util.Util;
 
 /**
- * p1<sup>2</sup>+p2<sup>3</sup>+p3<sup>4</sup>=5���� ��p2=p3=2ʱ��p1ȡ������ʹ�õ����������
- * ��p�����5����-24��ƽ����
- * 
+ * p1<sup>2</sup>+p2<sup>3</sup>+p3<sup>4</sup>=5百万， 当p2=p3=2时，p1取到可以使用的最大素数。
+ * 即p最大是5百万-24的平方根
+ *
  * @author atlas
  * @date 2013-4-26
  */

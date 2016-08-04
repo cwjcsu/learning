@@ -6,7 +6,7 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-// ȡ����
+// 取对数
 public class P99 {
 	public static void main(String[] args) throws Exception {
 		do1();

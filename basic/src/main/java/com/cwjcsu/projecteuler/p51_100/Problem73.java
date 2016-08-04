@@ -4,7 +4,7 @@ import com.cwjcsu.projecteuler.util.Util;
 
 /**
  * There are some implementations using the Farey sequence to speed up the
- * search, but didn��t see the need for this problem.
+ * search, but didn't see the need for this problem.
  * 
  * @author Sunny
  * 

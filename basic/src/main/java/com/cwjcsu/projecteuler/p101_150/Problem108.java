@@ -6,12 +6,12 @@ import com.cwjcsu.projecteuler.util.Util;
 import com.cwjcsu.projecteuler.util.Util.PrimeDivisor;
 
 /**
- * 1/x + 1/y = 1/n, x<=y, ����������� ans = [phi(n^2) + 1] / 2 ,phi(n): n��Լ���ĸ���,
- * 
+ * 1/x + 1/y = 1/n, x<=y, 求整数解个数 ans = [phi(n^2) + 1] / 2 ,phi(n): n的约数的个数,
+ *
  * see PE80.txt
- * 
+ *
  * @author Sunny
- * 
+ *
  */
 public class Problem108 {
 	// 180180

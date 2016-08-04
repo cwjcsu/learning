@@ -1,7 +1,7 @@
 package com.cwjcsu.projecteuler.p51_100;
 import com.cwjcsu.projecteuler.util.Util;
 
-//������ŷ�������ĺ�
+//就是求欧拉函数的和
 public class Problem72 {
 	//303963552391
 	public static void main(String[] args) {

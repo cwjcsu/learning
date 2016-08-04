@@ -5,7 +5,7 @@ import java.util.BitSet;
 import com.cwjcsu.projecteuler.util.Util;
 
 /**
- * ������
+ * 暴力法
  * @author atlas
  * @date 2013-4-26
  */

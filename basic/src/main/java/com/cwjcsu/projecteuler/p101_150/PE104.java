@@ -2,14 +2,15 @@ package com.cwjcsu.projecteuler.p101_150;
 
 import com.cwjcsu.projecteuler.util.Util;
 
+
 /**
  * http://www.mathblog.dk/project-euler-104-fibonacci-pandigital/
- * 
- * ������Ӧ�ÿɽ�
- * 
- * Fibonacci���м���http://en.wikipedia.org/wiki/Fibonacci_number<br/>
- * ���������ʽ��
- * 
+ *
+ * 暴力法应该可解
+ *
+ * Fibonacci数列见：http://en.wikipedia.org/wiki/Fibonacci_number<br/>
+ * 可以求出公式是
+ *
  * @author atlas
  * @date 2013-4-26
  */

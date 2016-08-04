@@ -6,7 +6,7 @@ public class Problem4 {
 		test1();
 	}
 
-	// ������ 580085,995*583
+	// 暴力法 580085,995*583
 	public static void test1() {
 		int I = 0, J = 0, S = 0;
 		for (int i = 100; i < 999; i++) {

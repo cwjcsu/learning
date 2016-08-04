@@ -5,7 +5,7 @@ public class Problem9 {
 		test1();
 	}
 
-	// ������
+	// 暴力法
 	static void test1() {
 		int A = 0, B = 0, C = 0;
 		L: for (int a = 1; a < 333; a++) {

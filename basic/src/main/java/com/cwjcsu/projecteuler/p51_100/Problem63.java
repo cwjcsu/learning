@@ -4,18 +4,18 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * һ�����ж��ٸ����ֿ����ù�ʽ��(int)log10(n)+1,n�����Գ���10����Ϊ10^n��n+1������ <br>
+ * 一个数有多少个数字可以用公式：(int)log10(n)+1,n不可以超过10，因为10^n有n+1个数字 <br>
  * One way to know how many digits a number has is to use the formula: int(log10
  * n) +1. For this problem n cannot be greater than 10 since 10n is always n+1
  * digits long.
- * 
+ *
  * So we need to create a function such that f(n) = upper limit of n. Using our
- * log function and using 9 as an example we define f(9) as int (1 / (1 �C log10
- * 9)) or 21 such that 9n < 10n-1. Thus 9n is n digits long when n �� 21. We
+ * log function and using 9 as an example we define f(9) as int (1 / (1 – log10
+ * 9)) or 21 such that 9n < 10n-1. Thus 9n is n digits long when n ≤ 21. We
  * repeat this same process for 1 through 8 and sum the results for an answer.
- * 
+ *
  * @author Sunny
- * 
+ *
  */
 public class Problem63 {
 	/**
