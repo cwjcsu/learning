@@ -203,76 +203,129 @@ public class DynamicProgramming {
      * @param dungeon
      * @return
      */
+//    public int calculateMinimumHP(int[][] dungeon) {
+//        if (dungeon.length == 0) {
+//            return 0;
+//        }
+//        int m = dungeon.length;
+//        int n = dungeon[0].length;
+//        int[][] remainHp = new int[m][n];
+//        int[][] hp = new int[m][n];//hp[i][j]是走到底(i,j)位置必须要有的初始hp
+//        int d0 = dungeon[0][0];
+//        if (d0 <= 0) {
+//            hp[0][0] = 1 - d0;
+//            remainHp[0][0] = 1;
+//        } else {
+//            hp[0][0] = 1;
+//            remainHp[0][0] = d0 + 1;
+//        }
+//        for (int i = 0; i < m; i++) {
+//            for (int j = 0; j < n; j++) {
+//                HpPair p1 = i > 0 ? calcHpPair(remainHp[i - 1][j], hp[i - 1][j], dungeon[i][j]) : null;
+//                HpPair p2 = j > 0 ? calcHpPair(remainHp[i][j - 1], hp[i][j - 1], dungeon[i][j]) : null;
+//                HpPair curr = p1;
+//                if (p1 != null && p2 != null) {
+//                    if (p1.hp < p2.hp) {
+//                        curr = p1;
+//                    } else {
+//                        curr = p2;
+//                    }
+//                } else {
+//                    curr = p1 != null ? p1 : p2;
+//                }
+//                if (curr == null) {
+//                    continue;
+//                }
+//                hp[i][j] = curr.hp;
+//                remainHp[i][j] = curr.remain;
+//            }
+//        }
+//        return hp[m - 1][n - 1];
+//    }
+//
+//    /**
+//     * 根据上一个节点的信息（剩余HP：remain，达到这个点的最少开始hp：hp）和当前节点的dungeon值计算当前节点信息
+//     *
+//     * @param remain
+//     * @param hp
+//     * @param dungeon
+//     * @return
+//     */
+//    private HpPair calcHpPair(int remain, int hp, int dungeon) {
+//        int hp1;
+//        int remain1;
+//        int t1 = remain + dungeon;
+//        if (t1 < 1) {
+//            hp1 = hp - t1 + 1;
+//            remain1 = 1;//-remain+1
+//        } else {
+//            hp1 = hp;
+//            remain1 = t1;
+//        }
+//        return new HpPair(hp1, remain1);
+//    }
+//
+//    private static class HpPair {
+//        int hp;
+//        int remain;
+//
+//        public HpPair(int hp, int remain) {
+//            this.hp = hp;
+//            this.remain = remain;
+//        }
+//    }
+
+
+    /**
+     * 174，从右下到左上进行dp迭代
+     *
+     * @param dungeon
+     * @return
+     */
     public int calculateMinimumHP(int[][] dungeon) {
         if (dungeon.length == 0) {
             return 0;
         }
         int m = dungeon.length;
         int n = dungeon[0].length;
-        int[][] remainHp = new int[m][n];
         int[][] hp = new int[m][n];//hp[i][j]是走到底(i,j)位置必须要有的初始hp
-        int d0 = dungeon[0][0];
-        if (d0 <= 0) {
-            hp[0][0] = 1 - d0;
-            remainHp[0][0] = 1;
-        } else {
-            hp[0][0] = 1;
-            remainHp[0][0] = d0 + 1;
+        hp[m - 1][n - 1] = Math.max(1, 1 - dungeon[m - 1][n - 1]);
+        for (int i = m - 2; i >= 0; i--) {
+            hp[i][n - 1] = Math.max(1, hp[i + 1][n - 1] - dungeon[i][n - 1]);
         }
-        for (int i = 0; i < m; i++) {
-            for (int j = 0; j < n; j++) {
-                HpPair p1 = i > 0 ? calcHpPair(remainHp[i - 1][j], hp[i - 1][j], dungeon[i][j]) : null;
-                HpPair p2 = j > 0 ? calcHpPair(remainHp[i][j - 1], hp[i][j - 1], dungeon[i][j]) : null;
-                HpPair curr = p1;
-                if (p1 != null && p2 != null) {
-                    if (p1.hp < p2.hp) {
-                        curr = p1;
-                    } else {
-                        curr = p2;
-                    }
-                } else {
-                    curr = p1 != null ? p1 : p2;
-                }
-                if (curr == null) {
-                    continue;
-                }
-                hp[i][j] = curr.hp;
-                remainHp[i][j] = curr.remain;
+        for (int j = n - 2; j >= 0; j--) {
+            hp[m - 1][j] = Math.max(1, hp[m - 1][j + 1] - dungeon[m - 1][j]);
+        }
+        for (int i = m - 2; i >= 0; i--) {
+            for (int j = n - 2; j >= 0; j--) {
+                hp[i][j] = Math.max(1, Math.min(hp[i + 1][j], hp[i][j + 1]) - dungeon[i][j]);
             }
         }
-        return hp[m - 1][n - 1];
+        return hp[0][0];
     }
+
 
     /**
-     * 根据上一个节点的信息（剩余HP：remain，达到这个点的最少开始hp：hp）和当前节点的dungeon值计算当前节点信息
+     * 300
      *
-     * @param remain
-     * @param hp
-     * @param dungeon
+     * @param nums
      * @return
      */
-    private HpPair calcHpPair(int remain, int hp, int dungeon) {
-        int hp1;
-        int remain1;
-        int t1 = remain + dungeon;
-        if (t1 < 1) {
-            hp1 = hp - t1 + 1;
-            remain1 = 1;//-remain+1
-        } else {
-            hp1 = hp;
-            remain1 = t1;
+    public int lengthOfLIS(int[] nums) {
+        /**
+         * lens[i]表示迭代到第i步之后，前面最长子序列的长度
+         */
+        int[] lens = new int[nums.length];
+        lens[0] = 1;
+        for (int i = 1; i < nums.length; i++) {
+            int maxLen = -1;
+            for (int j = 0; j < i; j++) {
+                if (nums[j] < nums[i]) {
+                    maxLen = Math.max(maxLen, lens[j] + 1);
+                }
+            }
         }
-        return new HpPair(hp1, remain1);
-    }
-
-    private static class HpPair {
-        int hp;
-        int remain;
-
-        public HpPair(int hp, int remain) {
-            this.hp = hp;
-            this.remain = remain;
-        }
+        return lens[nums.length - 1];
     }
 
 }
