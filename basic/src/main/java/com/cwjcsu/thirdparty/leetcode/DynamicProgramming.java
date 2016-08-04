@@ -312,6 +312,9 @@ public class DynamicProgramming {
      * @return
      */
     public int lengthOfLIS(int[] nums) {
+        if (nums.length == 0) {
+            return 0;
+        }
         /**
          * lens[i]表示迭代到第i步之后，前面最长子序列的长度
          */
@@ -321,8 +324,15 @@ public class DynamicProgramming {
             int maxLen = -1;
             for (int j = 0; j < i; j++) {
                 if (nums[j] < nums[i]) {
-                    maxLen = Math.max(maxLen, lens[j] + 1);
+                    if (lens[j] > maxLen) {
+                        maxLen = lens[j];
+                    }
                 }
+            }
+            if (maxLen > 0) {
+                lens[i] = maxLen + 1;
+            }else {
+                lens[i] = lens[i - 1];
             }
         }
         return lens[nums.length - 1];

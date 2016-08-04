@@ -202,7 +202,15 @@ public class BatchTest {
         System.out.println(dp.calculateMinimumHP(grid));//1
         grid = new int[][]{{1, -3, 3}, {0, -2, 0}, {-3, -3, -3}};
         System.out.println(dp.calculateMinimumHP(grid));//3
-
-
     }
+    @Test
+    public void testLengthOfLIS(){
+        int[] nums = {10, 9, 2, 5, 3, 7, 101, 18};
+        System.out.println(dp.lengthOfLIS(nums));//4
+        nums = new int[]{1, 3, 6, 7, 9, 4, 10, 5, 6};
+        System.out.println(dp.lengthOfLIS(nums));//6
+    }
+
+
+
 }
