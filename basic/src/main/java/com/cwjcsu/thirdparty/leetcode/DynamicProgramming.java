@@ -6,6 +6,8 @@
 
 package com.cwjcsu.thirdparty.leetcode;
 
+import com.cwjcsu.projecteuler.util.Util;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -316,7 +318,7 @@ public class DynamicProgramming {
             return 0;
         }
         /**
-         * lens[i]表示迭代到第i步之后，前面最长子序列的长度
+         * lens[i]表示迭代到第i步之后，以nums[i]结尾的最长子序列的长度
          */
         int[] lens = new int[nums.length];
         lens[0] = 1;
@@ -324,18 +326,56 @@ public class DynamicProgramming {
             int maxLen = -1;
             for (int j = 0; j < i; j++) {
                 if (nums[j] < nums[i]) {
-                    if (lens[j] > maxLen) {
-                        maxLen = lens[j];
-                    }
+                    maxLen = Math.max(maxLen, lens[j]);
                 }
             }
             if (maxLen > 0) {
                 lens[i] = maxLen + 1;
-            }else {
-                lens[i] = lens[i - 1];
+            } else {
+                lens[i] = 1;//比前面所有数据都小，上升序列从这里开始，所以取1
             }
         }
-        return lens[nums.length - 1];
+        return Util.max(lens);
     }
+
+    /**
+     * 91. Decode Ways
+     * 算法描述
+     *
+     * @param s
+     * @return
+     */
+    public int numDecodings(String s) {
+        if (s.length() == 0) {
+            return 0;
+        }
+        /**
+         * w[i]表示子问题[0~i]时最后一个数字是单数字编码的方法数；
+         */
+        int[] w = new int[s.length()];
+        /**
+         * v[i]表示子问题[0~i]时最后一个数字是与前面数字合并进行编码的方法数；
+         */
+        int[] v = new int[s.length()];
+        w[0] = s.charAt(0) != '0' ? 1 : 0;
+        v[0] = 0;
+        for (int i = 1; i < s.length(); i++) {
+            int ch = s.charAt(i) - '0';
+            int prev = s.charAt(i - 1) - '0';
+            if (ch == 0) {//当前为'0'
+                w[i] = 0;//'0'无法单独编码,所以w[i]取0
+                v[i] = (prev == 1 || prev == 2) ? w[i - 1] : 0;//'0'与前面合并编码只有当prev为'1'或者'2'
+                continue;
+            }
+            w[i] = v[i - 1] + w[i - 1];//前面两种类型均可连接单独编码数字
+            if (prev == 1 || (prev == 2 && ch <= 6)) {//满足这个条件，才可以合并编码
+                v[i] = w[i - 1];
+            } else {
+                v[i] = 0;
+            }
+        }
+        return w[s.length() - 1] + v[s.length() - 1];
+    }
+
 
 }

@@ -5,7 +5,11 @@
 package com.cwjcsu.thirdparty.leetcode.rangequery;
 
 /**
- * 
+ * 304 算法描述
+ *
+ * sum矩阵保存的每一行都是一个求和行，即sum[i][j]=matrix[i][0]+matrix[i][1]+...+matrix[i][j]
+ * 于是，求中间子矩阵的和，就转化成子矩阵每一行求其中一段的和，从而转换成NumArray.java描述的算法
+ *
  * @author atlas
  *
  */

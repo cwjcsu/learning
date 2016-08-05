@@ -40,7 +40,8 @@ public class LIS {
 
 	/**
 	 * 上升序列在a中可以存在间隔，O(n*n)
-	 * 
+	 *
+     * Wrong
 	 * @param a
 	 * @return
 	 */
