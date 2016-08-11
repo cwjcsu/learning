@@ -1,11 +1,13 @@
 package com.cwjcsu.thirdparty.leetcode;
 
+import com.cwjcsu.common.FileUtils;
+import com.cwjcsu.common.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Atlas on 2016/7/17.
@@ -220,6 +222,76 @@ public class BatchTest {
         System.out.println(dp.numDecodings("10"));//1
         System.out.println(dp.numDecodings("230"));//0
         System.out.println(dp.numDecodings("17"));//0
+    }
+
+    private List<Integer> toList(int... data) {
+        List<Integer> list = new ArrayList<Integer>(data.length);
+        for (int d : data) {
+            list.add(d);
+        }
+        return list;
+    }
+
+    @Test
+    public void testMinimumTotal() {
+        List<List<Integer>> triangle = new ArrayList<List<Integer>>();
+        triangle.add(toList(1));
+        triangle.add(toList(2, 3));
+        System.out.println(dp.minimumTotal(triangle));
+
+        triangle = new ArrayList<List<Integer>>();
+        triangle.add(toList(-1));
+        triangle.add(toList(2, 3));
+        triangle.add(toList(1, -1, -3));
+        System.out.println(dp.minimumTotal(triangle));
+
+        triangle = new ArrayList<List<Integer>>();
+        triangle.add(toList(2));
+        triangle.add(toList(3, 4));
+        triangle.add(toList(6, 5, 7));
+        triangle.add(toList(4, 1, 8, 3));
+        System.out.println(dp.minimumTotal(triangle));
+    }
+
+
+    @Test
+    public void testMaximalSquare() {
+        String[] rows = new String[]{"10100", "10111", "11111", "10010"};
+        System.out.println(dp.maximalSquare(toCharMattrix(rows)));
+    }
+
+    public static char[][] toCharMattrix(String[] rows) {
+        char[][] matrix = new char[rows.length][];
+        for (int i = 0; i < rows.length; i++) {
+            matrix[i] = rows[i].toCharArray();
+        }
+        return matrix;
+    }
+
+    public int[] readIntArray(String file) {
+        InputStream inputStream = BatchTest.class.getResourceAsStream(file);
+        if (inputStream == null) {
+            throw new RuntimeException("resource : " + file + " not found");
+        }
+        String line = FileUtils.readStringFromStream(inputStream);
+        line = StringUtils.trim(line, "[");
+        line = StringUtils.trim(line, ";");
+        line = StringUtils.trim(line, "]");
+        String[] parts = line.split(",");
+        int[] data = new int[parts.length];
+        for (int i=0;i<parts.length;i++) {
+            data[i] = Integer.valueOf(parts[i]);
+        }
+        return data;
+    }
+
+    @Test
+    public void testMaxSubArray() {
+        int[] data = new int[]{-2, 1, -3, 4, -1, 2, 1, -5, 4};
+        System.out.println(dp.maxSubArray(data));//6
+        data = new int[]{8, -19, 5, -4, 20};
+        System.out.println(dp.maxSubArray(data));//21
+        System.out.println(dp.maxSubArray(readIntArray("/leetcode/53.txt")));//
     }
 
 }

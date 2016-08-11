@@ -4,6 +4,8 @@
  */
 package com.cwjcsu.thirdparty.leetcode;
 
+import com.cwjcsu.projecteuler.util.Util;
+
 import java.math.BigInteger;
 import java.util.*;
 
@@ -116,8 +118,6 @@ public class Batch {
         }
         return head0;
     }
-
-
 
 
     /**
@@ -920,6 +920,7 @@ public class Batch {
     }
 
     /**
+     * 263
      * 是否只包含2,3,5作为因子 Hamming numbers
      *
      * @param num
@@ -2209,6 +2210,7 @@ public class Batch {
 
     /**
      * 165
+     *
      * @param version1
      * @param version2
      * @return
@@ -2235,6 +2237,7 @@ public class Batch {
 
     /**
      * 136
+     *
      * @param nums
      * @return
      */
@@ -2243,7 +2246,7 @@ public class Batch {
         for (int d : nums) {
             if (set.contains(d)) {
                 set.remove(d);
-            }else{
+            } else {
                 set.add(d);
             }
         }
@@ -2252,12 +2255,13 @@ public class Batch {
 
     /**
      * 136A
-     * @param  A
+     *
+     * @param A
      * @return
      */
     public int singleNumber_1(int[] A) {
         int result = A[0];
-        for(int i = 1; i < A.length; i++){
+        for (int i = 1; i < A.length; i++) {
             result = result ^ A[i];
         }
         return result;
@@ -2265,6 +2269,7 @@ public class Batch {
 
     /**
      * 260
+     *
      * @param nums
      * @return
      */
@@ -2273,21 +2278,21 @@ public class Batch {
         for (int d : nums) {
             if (set.contains(d)) {
                 set.remove(d);
-            }else{
+            } else {
                 set.add(d);
             }
         }
         int[] data = new int[set.size()];
-        int i=0;
+        int i = 0;
         for (Integer d : set) {
-            data[i++]=d;
+            data[i++] = d;
         }
         return data;
     }
 
     /**
      * 238
-     *
+     * <p>
      * 这道题给定我们一个数组，让我们返回一个新数组，对于每一个位置上的数是其他位置上数的乘积，
      * 并且限定了时间复杂度O(n)，并且不让我们用除法。如果让用除法的话，
      * 那这道题就应该属于Easy，因为可以先遍历一遍数组求出所有数字之积，
@@ -2296,12 +2301,14 @@ public class Batch {
      * 那么一遍下来，最后一个位置上的数字是之前所有数字之积，是符合题目要求的，只是前面所有的数还需要在继续乘。
      * 我们这时候再从后往前扫描，每个位置上的数在乘以后面所有数字之积，
      * 对于最后一个位置来说，由于后面没有数字了，所以乘以1就行。
+     *
      * @param nums
      * @return
      */
     public int[] productExceptSelf(int[] nums) {
         return null;
     }
+
     /**
      * 347
      *
@@ -2331,7 +2338,7 @@ public class Batch {
         return list;
     }
 
-   public static class Frequent implements Comparable<Frequent> {
+    public static class Frequent implements Comparable<Frequent> {
         int v;
         int count;
 
@@ -2464,4 +2471,6 @@ public class Batch {
             j--;
         }
     }
+
+
 }

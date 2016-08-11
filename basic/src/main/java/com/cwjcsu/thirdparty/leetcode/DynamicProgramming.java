@@ -8,7 +8,9 @@ package com.cwjcsu.thirdparty.leetcode;
 
 import com.cwjcsu.projecteuler.util.Util;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -377,5 +379,156 @@ public class DynamicProgramming {
         return w[s.length() - 1] + v[s.length() - 1];
     }
 
+    /**
+     * 120 Triangle
+     *
+     * @param triangle
+     * @return
+     */
+    public int minimumTotal(List<List<Integer>> triangle) {
+        if (triangle == null || triangle.size() == 0) {
+            return 0;
+        }
+        int depth = triangle.get(triangle.size() - 1).size();
+        int[] sum = new int[depth];
+        int[] temp = new int[depth];
+        sum[0] = triangle.get(0).get(0);
+        for (int i = 1; i < triangle.size(); i++) {
+            List<Integer> row = triangle.get(i);
+            for (int j = 0; j < row.size(); j++) {
+                temp[j] = row.get(j) + Math.min(j > 0 ? sum[j - 1] : Integer.MAX_VALUE, j < i ? sum[j] : Integer.MAX_VALUE);
+            }
+            int[] t = sum;
+            sum = temp;
+            temp = t;
+        }
+        return Util.min(sum);
+    }
 
+
+    /**
+     * 264
+     * <p>
+     * 设想一下，所有丑陋数都是由因子2,3,5组成，对于一个乘5得到的丑陋数U，设u*5=U，则u也比如是丑陋数，假设是第l个丑陋数。
+     * 同理可得，所有的丑陋数，都可以由它们的前任们乘以2,3或者5得到。那么可以用一个下标l3记录它乘以5以后得到的最大丑陋数。
+     *
+     * @param n
+     * @return
+     */
+    public int nthUglyNumber(int n) {
+        /**
+         * 按顺序不重不漏记录丑陋数
+         */
+        List<Integer> list = new ArrayList<Integer>(n);
+        list.add(1);
+        /**
+         *  l1,l2,l3分别记录到目前为止，跟2,3,5相乘得到当前最大丑陋数的下标，即在list中的下标。
+         */
+        int l1 = 0, l2 = 0, l3 = 0;
+        while (list.size() < n) {
+            int u1 = list.get(l1) * 2;
+            int u2 = list.get(l2) * 3;
+            int u3 = list.get(l3) * 5;
+            int u = Math.min(u1, Math.min(u2, u3));
+            list.add(u);
+            if (u1 == u) l1++;
+            if (u2 == u) l2++;
+            if (u3 == u) l3++;
+        }
+        return list.get(n - 1);
+    }
+
+    /**
+     * 221. Maximal Square
+     *
+     * @param matrix
+     * @return
+     */
+    public int maximalSquare(char[][] matrix) {
+        if (matrix.length == 0 || matrix[0].length == 0) {
+            return 0;
+        }
+        int m = matrix.length;
+        int n = matrix[0].length;
+        int[][] maxSqure = new int[m][n];
+        for (int i = 0; i < m; i++) {
+            for (int j = 0; j < n; j++) {
+                int d = matrix[i][j] - '0';
+                if (i == 0 || j == 0) {
+                    maxSqure[i][j] = d;
+                    continue;
+                }
+                if (d == 0) {
+                    maxSqure[i][j] = 0;
+                } else {
+                    int p = Math.min(maxSqure[i - 1][j], Math.min(maxSqure[i - 1][j - 1], maxSqure[i][j - 1]));
+                    maxSqure[i][j] = p + 1;
+                }
+            }
+        }
+        int len = Util.max(maxSqure);
+        return len * len;
+    }
+
+    public static int max(int[][] d) {
+        int max = Integer.MIN_VALUE;
+        for (int i = 0; i < d.length; i++) {
+            for (int j = 0; j < d[i].length; j++) {
+                max = Math.max(max, d[i][j]);
+            }
+        }
+        return max;
+    }
+
+    /**
+     * 85. Maximal Rectangle
+     *
+     * @param matrix
+     * @return
+     */
+    public int maximalRectangle(char[][] matrix) {
+        return 0;
+    }
+
+    class Rect {
+        int row;
+        int col;
+        int area;
+
+        public Rect(int row, int col) {
+            this.row = row;
+            this.col = col;
+            this.area = row * col;
+        }
+    }
+
+
+    /**
+     * 53. Maximum Subarray
+     * <p>
+     * Time limit exceed
+     *
+     * @param nums
+     * @return
+     */
+    public int maxSubArray(int[] nums) {
+        int[] sum = new int[nums.length];
+        for (int i = 0; i < nums.length; i++) {
+            sum[i] = i == 0 ? nums[i] : nums[i] + sum[i - 1];
+        }
+        //s,t分别是当前步骤所求数组的下标的起始点，max是所求的最大和
+        int s = 0, t = 0;
+        int max = nums[0];
+        for (int i = 1; i < nums.length; i++) {
+            for (int j = s; j <= i; j++) {
+                int v = j == 0 ? sum[i] : sum[i] - sum[j - 1];
+                if (v > max) {
+                    s = j;
+                    t = i;
+                    max = v;
+                }
+            }
+        }
+        return max;
+    }
 }

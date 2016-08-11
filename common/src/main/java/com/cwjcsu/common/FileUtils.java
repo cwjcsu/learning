@@ -39,13 +39,11 @@ public class FileUtils {
 
     /**
      * Save a String to a file on disk using specified path.
-     *
+     * <p>
      * WARNING: This deletes the original file before it writes.
      *
-     * @param contents
-     *            to save to file on disk
-     * @param path
-     *            to save file to.
+     * @param contents to save to file on disk
+     * @param path     to save file to.
      */
     public static void writeStringToFile(String contents, String path) {
         try {
@@ -72,11 +70,10 @@ public class FileUtils {
 
     /**
      * Read a file off disk into a String and return it.
-     *
+     * <p>
      * Expect weird stuff if the file is not textual.
      *
-     * @param path
-     *            of file to read in
+     * @param path of file to read in
      * @return String containing file.
      */
     public static String readStringFromFile(String path) {
@@ -125,15 +122,12 @@ public class FileUtils {
 
     /**
      * Read a file off disk into a byte array with specified range
-     *
+     * <p>
      * This can use lots of memory if you read a large file
      *
-     * @param fileToRead
-     *            File to read part of into byte array
-     * @param start
-     *            index of read
-     * @param end
-     *            index of read
+     * @param fileToRead File to read part of into byte array
+     * @param start      index of read
+     * @param end        index of read
      * @return byte[] array from file.
      */
     public static byte[] readByteArrayFromFile(File fileToRead, long start,
@@ -175,9 +169,8 @@ public class FileUtils {
      * check file can read\write\execute or their combinations.
      *
      * @param file
-     * @param mode
-     *            string of combinations of "r","w", "e" respectively for
-     *            read,write,execute.
+     * @param mode string of combinations of "r","w", "e" respectively for
+     *             read,write,execute.
      * @return
      */
     public static boolean checkFile(String file, String mode) {
@@ -231,7 +224,6 @@ public class FileUtils {
     }
 
     /**
-     *
      * @param file
      * @return
      */
@@ -246,9 +238,7 @@ public class FileUtils {
     }
 
     /**
-     *
-     * @param files
-     *            exists files
+     * @param files exists files
      * @return empty list if the command not exists
      */
     public static List<FileStat> fstat(List<File> files) {
@@ -307,8 +297,7 @@ public class FileUtils {
      * @param user
      * @param group
      * @return chown的退出码, if 0,success,else fail
-     * @throws NullPointerException
-     *             if both user 和group is null
+     * @throws NullPointerException if both user 和group is null
      */
     public static int chown(File file, String user, String group) {
         String path = file.getPath();
@@ -390,6 +379,7 @@ public class FileUtils {
 
     /**
      * check if file is a valid file name in Linux.
+     *
      * @param file
      * @return
      */
@@ -400,6 +390,21 @@ public class FileUtils {
             return true;
         } catch (IOException e) {
             return false;
+        }
+    }
+
+    public static String readStringFromStream(InputStream stream) {
+        BufferedReader input = null;
+        try {
+            input = new BufferedReader(new InputStreamReader(stream));
+            StringWriter writer = new StringWriter();
+            IOUtils.copyWriter(input, writer);
+            String contents = writer.toString();
+            return contents;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        } finally {
+            IOUtils.closeQuietly(input);
         }
     }
 }
