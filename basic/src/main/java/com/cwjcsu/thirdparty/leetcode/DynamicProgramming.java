@@ -505,13 +505,13 @@ public class DynamicProgramming {
 
     /**
      * 53. Maximum Subarray
-     * <p>
+     * <p> O(n^2)
      * Time limit exceed
      *
      * @param nums
      * @return
      */
-    public int maxSubArray(int[] nums) {
+    public int maxSubArray0(int[] nums) {
         int[] sum = new int[nums.length];
         for (int i = 0; i < nums.length; i++) {
             sum[i] = i == 0 ? nums[i] : nums[i] + sum[i - 1];
@@ -531,4 +531,80 @@ public class DynamicProgramming {
         }
         return max;
     }
+
+    /**
+     * 53
+     * 设两个变量，一个是如果以当前元素为最长子数组的最后一个元素，所能达到的最大值max_ending_here。另一个是已知的最大值max_so_far。
+     * http://blog.csdn.net/magisu/article/details/14515209
+     * max_subarray(A[n]) = max( max_subarray(A[n-1]), A[n], max_subarray(A[n-1)(+)A[n] );
+     * <p>
+     * <p>
+     * O(n)
+     *
+     * @param A
+     * @return
+     */
+    public int maxSubArray(int[] A) {
+        if (A.length == 0)
+            return 0;
+        int max_ending_here = A[0];
+        int max_so_far = A[0];
+        for (int i = 1; i < A.length; ++i) {
+            if (max_ending_here < 0)
+                // So far we get negative values, this part has to be dropped
+                max_ending_here = A[i];
+            else
+                // we can accept it, it could grow later
+                max_ending_here += A[i];
+
+            max_so_far = Math.max(max_so_far, max_ending_here);
+        }
+        return max_so_far;
+    }
+
+    /**
+     * 152. Maximum Product Subarray
+     *
+     * @param nums
+     * @return
+     */
+    public int maxProduct(int[] nums) {
+        if (nums.length == 0) {
+            return 0;
+        }
+        int max_positive_ending_here = nums[0] > 0 ? nums[0] : 1;
+        int min_negative_ending_here = nums[0] < 0 ? nums[0] : 0;
+        for (int i = 0; i < nums.length; i++) {
+            int d = nums[i];
+            if (d > 0) {
+                max_positive_ending_here = Math.min(max_positive_ending_here * d, d);
+                min_negative_ending_here = Math.min(min_negative_ending_here * d, min_negative_ending_here);
+            } else {
+
+            }
+        }
+        return 0;
+    }
+
+    /**
+     * 343. Integer Break
+     * 发现规律：尽可能的分成多个3相加，除非最后留下剩下4，因为4比3*1更大，分成2+2也是等价的
+     * <p>
+     * https://discuss.leetcode.com/topic/43081/simple-java-solution
+     *
+     * @param n
+     * @return
+     */
+    public int integerBreak(int n) {
+        if (n == 2 || n == 3) return n - 1;
+        if (n == 4) return 4;
+        int temp = n;
+        int sum = 1;
+        while (temp > 4) {
+            temp = temp - 3;
+            sum = sum * 3;
+        }
+        return sum * temp;
+    }
+
 }

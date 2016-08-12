@@ -294,4 +294,12 @@ public class BatchTest {
         System.out.println(dp.maxSubArray(readIntArray("/leetcode/53.txt")));//
     }
 
+    @Test
+    public void testMaxProduct(){
+        int[] nums = new int[]{2,3,-2,4};
+        System.out.println(dp.maxProduct(nums));//6
+
+        nums = new int[]{-2, 3, -4};
+        System.out.println(dp.maxProduct(nums));//24
+    }
 }
