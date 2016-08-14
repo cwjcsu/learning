@@ -279,7 +279,7 @@ public class BatchTest {
         line = StringUtils.trim(line, "]");
         String[] parts = line.split(",");
         int[] data = new int[parts.length];
-        for (int i=0;i<parts.length;i++) {
+        for (int i = 0; i < parts.length; i++) {
             data[i] = Integer.valueOf(parts[i]);
         }
         return data;
@@ -295,11 +295,28 @@ public class BatchTest {
     }
 
     @Test
-    public void testMaxProduct(){
-        int[] nums = new int[]{2,3,-2,4};
+    public void testMaxProduct() {
+        int[] nums = new int[]{2, 3, -2, 4};
         System.out.println(dp.maxProduct(nums));//6
 
         nums = new int[]{-2, 3, -4};
         System.out.println(dp.maxProduct(nums));//24
+
+        nums = new int[]{-4, -3, -2};
+        System.out.println(dp.maxProduct(nums));//12
+
+
+        nums = new int[]{-4, -2};
+        System.out.println(dp.maxProduct(nums));//12
+
+
+        nums = new int[]{-4};
+        System.out.println(dp.maxProduct(nums));//12
+
+    }
+
+    @Test
+    public void testCanConstruct() {
+        System.out.println(b.canConstruct("fihjjjjei", "hjibagacbhadfaefdjaeaebgi"));
     }
 }

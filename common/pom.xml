@@ -74,7 +74,7 @@
             <version>3.1.0</version>
             <scope>provided</scope>
         </dependency>
-
+<!--
         <dependency>
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcprov-jdk15on</artifactId>
@@ -99,7 +99,7 @@
             <groupId>org.bouncycastle</groupId>
             <artifactId>bcmail-jdk15on</artifactId>
             <version>1.54</version>
-        </dependency>
+        </dependency>-->
     </dependencies>
 
 </project>

@@ -564,6 +564,15 @@ public class DynamicProgramming {
 
     /**
      * 152. Maximum Product Subarray
+     * 算法描述：
+     * 第i步时，
+     * 设max_positive是以Ai结尾的乘积为正而且最大的子序列的乘积；
+     * 设min_negative是以Ai结尾的乘积为负且最小的子序列的乘积（绝对值最大）。
+     * （因为你不知道i+1步遇到正数还是负数，还是0，所以，需要记录正负两个方向。）
+     * 设max为到i未知的最优解。
+     *
+     * 第i+1步的时候，可以根据Ai+1的值分别更新max_positive、min_negative和max。直到最后
+     *
      *
      * @param nums
      * @return
@@ -572,18 +581,22 @@ public class DynamicProgramming {
         if (nums.length == 0) {
             return 0;
         }
-        int max_positive_ending_here = nums[0] > 0 ? nums[0] : 1;
-        int min_negative_ending_here = nums[0] < 0 ? nums[0] : 0;
-        for (int i = 0; i < nums.length; i++) {
+        int max_positive = nums[0] > 0 ? nums[0] : 0;
+        int min_negative = nums[0] < 0 ? nums[0] : 0;
+        int max = nums[0];
+        for (int i = 1; i < nums.length; i++) {
             int d = nums[i];
-            if (d > 0) {
-                max_positive_ending_here = Math.min(max_positive_ending_here * d, d);
-                min_negative_ending_here = Math.min(min_negative_ending_here * d, min_negative_ending_here);
+            if (d >= 0) {
+                max_positive = Math.max(max_positive * d, d);
+                min_negative = min_negative * d;
             } else {
-
+                int t = min_negative * d;
+                min_negative = Math.min(max_positive * d, d);
+                max_positive = t;
             }
+            max = Math.max(max_positive, max);
         }
-        return 0;
+        return max;
     }
 
     /**
@@ -606,5 +619,6 @@ public class DynamicProgramming {
         }
         return sum * temp;
     }
+
 
 }

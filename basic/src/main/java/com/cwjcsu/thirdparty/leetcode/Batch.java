@@ -2472,5 +2472,40 @@ public class Batch {
         }
     }
 
+    /**
+     *  383
+     * @param ransomNote
+     * @param magazine
+     * @return
+     */
+    public boolean canConstruct(String ransomNote, String magazine) {
+        Map<Character,Integer> magazineChars = new HashMap<Character,Integer>();
+        for(int i=0;i<magazine.length();i++) {
+            char ch = magazine.charAt(i);
+            Integer count = magazineChars.get(ch);
+            if (count == null) {
+                count = 0;
+            }
+            count++;
+            magazineChars.put(ch, count);
+        }
+        for(int i=0;i<ransomNote.length();i++) {
+            char ch = ransomNote.charAt(i);
+            Integer count = magazineChars.get(ch);
+            if (count == null) {
+                return false;
+            }
+            count--;
+            if (count == 0) {
+                magazineChars.remove(ch);
+            }else {
+                magazineChars.put(ch, count);
+            }
+        }
+        return true;
+    }
+
+
+
 
 }
