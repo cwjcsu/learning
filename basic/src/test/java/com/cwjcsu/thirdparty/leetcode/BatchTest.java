@@ -319,4 +319,21 @@ public class BatchTest {
     public void testCanConstruct() {
         System.out.println(b.canConstruct("fihjjjjei", "hjibagacbhadfaefdjaeaebgi"));
     }
+
+    @Test
+    public void testDeserialize() {
+        NestedInteger ni = b.deserialize("[123,[456,[789]]]");
+        System.out.println(ni);
+        System.out.println(b.deserialize("123"));
+        System.out.println(b.deserialize("[123,456,[788,799,833],[[]],10,[]]"));
+        System.out.println(b.deserialize("[]"));
+        System.out.println(b.deserialize("[[]]"));
+        System.out.println(b.deserialize("-234989"));
+        System.out.println(b.deserialize("[-1]"));
+    }
+
+    @Test
+    public void testSuperPow(){
+        b.superPow(2, new int[]{1, 2, 3, 4});
+    }
 }

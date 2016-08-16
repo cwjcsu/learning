@@ -2473,14 +2473,15 @@ public class Batch {
     }
 
     /**
-     *  383
+     * 383
+     *
      * @param ransomNote
      * @param magazine
      * @return
      */
     public boolean canConstruct(String ransomNote, String magazine) {
-        Map<Character,Integer> magazineChars = new HashMap<Character,Integer>();
-        for(int i=0;i<magazine.length();i++) {
+        Map<Character, Integer> magazineChars = new HashMap<Character, Integer>();
+        for (int i = 0; i < magazine.length(); i++) {
             char ch = magazine.charAt(i);
             Integer count = magazineChars.get(ch);
             if (count == null) {
@@ -2489,7 +2490,7 @@ public class Batch {
             count++;
             magazineChars.put(ch, count);
         }
-        for(int i=0;i<ransomNote.length();i++) {
+        for (int i = 0; i < ransomNote.length(); i++) {
             char ch = ransomNote.charAt(i);
             Integer count = magazineChars.get(ch);
             if (count == null) {
@@ -2498,11 +2499,112 @@ public class Batch {
             count--;
             if (count == 0) {
                 magazineChars.remove(ch);
-            }else {
+            } else {
                 magazineChars.put(ch, count);
             }
         }
         return true;
+    }
+
+
+    /**
+     * 385
+     *
+     * @param s
+     * @return
+     */
+    public NestedInteger deserialize(String s) {
+        Stack<NestedInteger> stacks = new Stack<NestedInteger>();
+        NestedInteger current = null;
+        Integer d = null;
+        boolean neg = false;
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            if (ch == '[') {
+                NestedInteger newNI = new NestedInteger();
+                if (current != null) {
+                    current.add(newNI);
+                    stacks.push(current);
+                }
+                current = newNI;
+                continue;
+            }
+            if (ch == ']') {
+                if (d != null) {
+                    current.add(new NestedInteger(neg ? -d : d));
+                    d = null;
+                    neg = false;
+                } else {
+                    //current.add(null);
+                }
+                if (stacks.size() > 0) {
+                    current = stacks.pop();
+                }
+                continue;
+            }
+            if (ch == '-') {
+                neg = true;
+                continue;
+            }
+            if (ch == ',') {
+                if (d != null) {
+                    d = neg ? -d : d;
+                    neg = false;
+                    current.add(new NestedInteger(d));
+                    d = null;
+                }
+                continue;
+            }
+            int dd = ch - '0';
+            if (d == null) {
+                d = 0;
+            }
+            d = d * 10 + dd;
+        }
+        if (d != null) {
+            if (current == null) {
+                current = new NestedInteger();
+            }
+            current.setInteger(neg ? -d : d);
+        }
+        return current;
+    }
+
+    /**
+     * 372
+     *
+     * @param a
+     * @param b
+     * @return
+     */
+    public int superPow(int a, int[] b) {
+        StringBuilder sb = new StringBuilder();
+        for (int d : b) {
+            sb.append((char) (d + '0'));
+        }
+        java.math.BigInteger p = new java.math.BigInteger(sb.toString());
+        return Util.powerMod(new java.math.BigInteger(a + ""), p, new java.math.BigInteger(1337 + "")).intValue();
+    }
+
+    /**
+     * 50
+     * @param x
+     * @param n
+     * @return
+     */
+    public double myPow(double x, int n) {
+        //TODO
+        return Math.pow(x, n);
+    }
+
+    /**
+     * 69
+     * @param x
+     * @return
+     */
+    public int mySqrt(int x) {
+        //TODO
+        return (int)Math.sqrt(x);
     }
 
 
