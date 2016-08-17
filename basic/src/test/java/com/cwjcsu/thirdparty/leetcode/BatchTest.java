@@ -336,4 +336,12 @@ public class BatchTest {
     public void testSuperPow(){
         b.superPow(2, new int[]{1, 2, 3, 4});
     }
+
+    @Test
+    public void testBinaryTreeUpsideDown(){
+        TreeNode root = new TreeNode(1, new TreeNode(2, new TreeNode(4), new TreeNode(5)), new TreeNode(3));
+        System.out.println(root);
+        root = b.BinaryTreeUpsideDown(root);
+        System.out.println(root);
+    }
 }

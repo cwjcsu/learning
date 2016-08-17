@@ -2588,6 +2588,7 @@ public class Batch {
 
     /**
      * 50
+     *
      * @param x
      * @param n
      * @return
@@ -2599,12 +2600,59 @@ public class Batch {
 
     /**
      * 69
+     *
      * @param x
      * @return
      */
     public int mySqrt(int x) {
         //TODO
-        return (int)Math.sqrt(x);
+        return (int) Math.sqrt(x);
+    }
+
+
+    /**
+     * 365
+     *
+     * @param x
+     * @param y
+     * @param z
+     * @return
+     */
+    public boolean canMeasureWater(int x, int y, int z) {
+        return z == 0 || (z - x <= y && z % gcd(x, y) == 0);
+    }
+
+    private int gcd(int x, int y) {
+        return y == 0 ? x : gcd(y, x % y);
+    }
+
+
+    /**
+     * 156 Binary Tree Upside Down
+     *
+     * @param root
+     * @return
+     */
+    public TreeNode BinaryTreeUpsideDown(TreeNode root) {
+        TreeNode left = root != null ? root.left : null;
+        TreeNode right = root != null ? root.right : null;
+        root.right = null;
+        root.left = null;
+        return BinaryTreeUpsideDown(root, left, right);
+    }
+
+    private TreeNode BinaryTreeUpsideDown(TreeNode root, TreeNode left, TreeNode right) {
+        if (root == null || left == null) {
+            return root;
+        }
+        TreeNode left1 = left.left;
+        TreeNode right1 = left.right;
+        left.left = right;
+        left.right = root;
+        if (left1 == null) {
+            return left;
+        }
+        return BinaryTreeUpsideDown(left, left1, right1);
     }
 
 
