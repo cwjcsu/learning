@@ -21,6 +21,8 @@ public class StringUtils {
 
 	public static final String LINE_SEPARATOR = getProperty("line.separator");
 
+	public static final String EMPTY = "";
+
 	public static char[] HEX_CHAR = { '0', '1', '2', '3', '4', '5', '6', '7',
 			'8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
 
@@ -187,6 +189,147 @@ public class StringUtils {
 		}
 		return sb.toString();
 	}
+
+	/**
+	 * <p>Joins the elements of the provided array into a single String
+	 * containing the provided list of elements.</p>
+	 * <p/>
+	 * <p>No delimiter is added before or after the list.
+	 * A <code>null</code> separator is the same as an empty String ("").
+	 * Null objects or empty strings within the array are represented by
+	 * empty strings.</p>
+	 * <p/>
+	 * <pre>
+	 * StringUtils.join(null, *)                = null
+	 * StringUtils.join([], *)                  = ""
+	 * StringUtils.join([null], *)              = ""
+	 * StringUtils.join(["a", "b", "c"], "--")  = "a--b--c"
+	 * StringUtils.join(["a", "b", "c"], null)  = "abc"
+	 * StringUtils.join(["a", "b", "c"], "")    = "abc"
+	 * StringUtils.join([null, "", "a"], ',')   = ",,a"
+	 * </pre>
+	 *
+	 * @param array     the array of values to join together, may be null
+	 * @param separator the separator character to use, null treated as ""
+	 * @return the joined String, <code>null</code> if null array input
+	 */
+
+	public static String join(double[] array, String separator) {
+		if (array == null) {
+			return null;
+		}
+		return join(array, separator, 0, array.length);
+	}
+
+	public static String join(int[] array, String separator) {
+		if (array == null) {
+			return null;
+		}
+		return join(array, separator, 0, array.length);
+	}
+
+	/**
+	 * <p>Joins the elements of the provided array into a single String
+	 * containing the provided list of elements.</p>
+	 * <p/>
+	 * <p>No delimiter is added before or after the list.
+	 * A <code>null</code> separator is the same as an empty String ("").
+	 * Null objects or empty strings within the array are represented by
+	 * empty strings.</p>
+	 * <p/>
+	 * <pre>
+	 * StringUtils.join(null, *)                = null
+	 * StringUtils.join([], *)                  = ""
+	 * StringUtils.join([null], *)              = ""
+	 * StringUtils.join(["a", "b", "c"], "--")  = "a--b--c"
+	 * StringUtils.join(["a", "b", "c"], null)  = "abc"
+	 * StringUtils.join(["a", "b", "c"], "")    = "abc"
+	 * StringUtils.join([null, "", "a"], ',')   = ",,a"
+	 * </pre>
+	 *
+	 * @param array      the array of values to join together, may be null
+	 * @param separator  the separator character to use, null treated as ""
+	 * @param startIndex the first index to start joining from.  It is
+	 *                   an error to pass in an end index past the end of the array
+	 * @param endIndex   the index to stop joining from (exclusive). It is
+	 *                   an error to pass in an end index past the end of the array
+	 * @return the joined String, <code>null</code> if null array input
+	 */
+	public static<T> String join(T[] array, String separator, int startIndex, int endIndex) {
+		if (array == null) {
+			return EMPTY;
+		}
+		if (separator == null) {
+			separator = EMPTY;
+		}
+
+		// endIndex - startIndex > 0:   Len = NofStrings *(len(firstString) + len(separator))
+		//           (Assuming that all Strings are roughly equally long)
+		int bufSize = (endIndex - startIndex);
+		if (bufSize <= 0) {
+			return EMPTY;
+		}
+
+		bufSize *= ((array[startIndex] == null ? 16 : array[startIndex].toString().length())
+				+ separator.length());
+
+		StringBuilder buf = new StringBuilder(bufSize);
+
+		for (int i = startIndex; i < endIndex; i++) {
+			if (i > startIndex) {
+				buf.append(separator);
+			}
+			if (array[i] != null) {
+				buf.append(array[i]);
+			}
+		}
+		return buf.toString();
+	}
+
+	public static String join(double[] array, String separator, int startIndex, int endIndex) {
+		if (array == null) {
+			return EMPTY;
+		}
+		if (separator == null) {
+			separator = EMPTY;
+		}
+		int bufSize = (endIndex - startIndex);
+		if (bufSize <= 0) {
+			return EMPTY;
+		}
+		bufSize += (array.length + separator.length()) * 3;
+		StringBuilder buf = new StringBuilder(bufSize);
+		for (int i = startIndex; i < endIndex; i++) {
+			if (i > startIndex) {
+				buf.append(separator);
+			}
+			buf.append(String.valueOf(array[i]));
+		}
+		return buf.toString();
+	}
+
+	public static String join(int[] array, String separator, int startIndex, int endIndex) {
+		if (array == null) {
+			return EMPTY;
+		}
+		if (separator == null) {
+			separator = EMPTY;
+		}
+		int bufSize = (endIndex - startIndex);
+		if (bufSize <= 0) {
+			return EMPTY;
+		}
+		bufSize += (array.length + separator.length()) * 3;
+		StringBuilder buf = new StringBuilder(bufSize);
+		for (int i = startIndex; i < endIndex; i++) {
+			if (i > startIndex) {
+				buf.append(separator);
+			}
+			buf.append(String.valueOf(array[i]));
+		}
+		return buf.toString();
+	}
+
 
 	public static boolean equals(String str1, String str2) {
 		return (str1 == str2) || (str1 != null && str1.equals(str2));

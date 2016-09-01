@@ -2656,6 +2656,173 @@ public class Batch {
     }
 
 
+    /**
+     * 386. Lexicographical Numbers
+     * <p>
+     * 超时了
+     *
+     * @param n
+     * @return
+     */
+    public List<Integer> lexicalOrder(int n) {
+        List<Integer> list = new ArrayList<Integer>();
+        for (int i = 1; i <= n; i++) {
+            list.add(i);
+        }
+        Collections.sort(list, new LexicographicalComparator());
+        return list;
+    }
 
+    private class LexicographicalComparator implements Comparator<Integer> {
+        int[] digits1 = new int[11];
+        int[] digits2 = new int[11];
+
+        @Override
+        public int compare(Integer o1, Integer o2) {
+            int i = fillDigits(digits1, o1);
+            int j = fillDigits(digits2, o2);
+            while (i < 11 && j < 11) {
+                if (digits1[i] < digits2[j]) {
+                    return -1;
+                }
+                if (digits1[i] > digits2[j]) {
+                    return 1;
+                }
+                i++;
+                j++;
+            }
+            if (i > j) {
+                return -1;
+            }
+            if (i < j) {
+                return 1;
+            }
+            return 0;
+        }
+
+        private int fillDigits(int[] digits, int i) {
+            int x = digits.length - 1;
+            int q = i, r = 0;
+            while (q > 0) {
+                q = i / 10;
+                //i-q*10
+                r = i - ((q << 3) + (q << 1));
+                digits[x--] = r;
+                i = q;
+            }
+            return x + 1;
+        }
+    }
+
+    /**
+     * 构造法
+     *
+     * @param n
+     * @return
+     */
+    public List<Integer> lexicalOrder2(int n) {
+
+        List<Integer> list = new ArrayList<Integer>();
+        for (int i = 1; i <= n; i++) {
+            list.add(i);
+        }
+        Collections.sort(list, new LexicographicalComparator());
+        return list;
+    }
+
+    /**
+     * 49. Group Anagrams
+     *
+     * @param strs
+     * @return
+     */
+    public List<List<String>> groupAnagrams(String[] strs) {
+        Map<String, List<String>> map = new HashMap<String, List<String>>();
+        for (String str : strs) {
+            char[] array = str.toCharArray();
+            Arrays.sort(array);
+            String key = new String(array);
+            List<String> list = map.get(key);
+            if (list == null) {
+                list = new ArrayList<String>();
+                map.put(key, list);
+            }
+            list.add(str);
+        }
+        return new ArrayList<List<String>>(map.values());
+    }
+
+    /**
+     * 239. Sliding Window Maximum
+     * 复杂度O(n*k)
+     *
+     * OK
+     *
+     * @param nums
+     * @param k
+     * @return
+     */
+    public int[] maxSlidingWindow(int[] nums, int k) {
+        if (k == 0) {
+            return new int[]{};
+        }
+        SlidingWindowPair pair = max(nums, 0, k);
+        int max = pair.max;
+        int index = pair.index;
+        int[] maxArr = new int[nums.length - k + 1];
+        maxArr[0] = max;
+        for (int i = 1; i + k - 1 < nums.length; i++) {
+            int d = nums[i + k - 1];
+            if (d < max && index >= i) {
+                maxArr[i] = max;
+                continue;
+            }
+            if (d > max) {
+                max = d;
+                index = i + k - 1;
+                maxArr[i] = max;
+                continue;
+            }
+            //d<max && index<i,find max
+            pair = max(nums, i, k);
+            max = pair.max;
+            index = pair.index;
+            maxArr[i] = max;
+        }
+        return maxArr;
+    }
+
+    public SlidingWindowPair max(int[] nums, int start, int len) {
+        int max = Integer.MIN_VALUE;
+        int index = -1;
+        for (int i = start; i < start + len; i++) {
+            if (nums[i] > max) {
+                max = nums[i];
+                index = i;
+            }
+        }
+        return new SlidingWindowPair(max, index);
+    }
+
+    class SlidingWindowPair {
+        int max;
+        int index;
+
+        public SlidingWindowPair(int max, int index) {
+            this.max = max;
+            this.index = index;
+        }
+    }
+
+
+    /**
+     * 76. Minimum Window Substring
+     * @param s
+     * @param t
+     * @return
+     */
+    public String minWindow(String s, String t) {
+        return null;
+    }
 
 }

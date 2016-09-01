@@ -333,15 +333,71 @@ public class BatchTest {
     }
 
     @Test
-    public void testSuperPow(){
+    public void testSuperPow() {
         b.superPow(2, new int[]{1, 2, 3, 4});
     }
 
     @Test
-    public void testBinaryTreeUpsideDown(){
+    public void testBinaryTreeUpsideDown() {
         TreeNode root = new TreeNode(1, new TreeNode(2, new TreeNode(4), new TreeNode(5)), new TreeNode(3));
         System.out.println(root);
         root = b.BinaryTreeUpsideDown(root);
         System.out.println(root);
+    }
+
+    @Test
+    public void testLexicalOrder() {
+//        List<Integer> list = b.lexicalOrder(12);
+//        System.out.println(list);
+//        System.out.println(b.lexicalOrder(111));
+
+//        System.out.println(b.lexicalOrder(49999));
+//        System.out.println(b.lexicalOrder(99));
+
+        System.out.println(b.lexicalOrder(1111));
+    }
+
+    @Test
+    public void testMedianFinder() {
+        MedianFinder medianFinder = new MedianFinder();
+        medianFinder.addNum(1);
+        System.out.println(medianFinder.findMedian());
+        medianFinder.addNum(3);
+        medianFinder.addNum(5);
+        System.out.println(medianFinder.list + "=>" + medianFinder.findMedian());
+        medianFinder.addNum(4);
+        System.out.println(medianFinder.list + "=>" + medianFinder.findMedian());
+        medianFinder.addNum(2);
+        System.out.println(medianFinder.list + "=>" + medianFinder.findMedian());
+        medianFinder.addNum(2);
+        System.out.println(medianFinder.list + "=>" + medianFinder.findMedian());
+
+    }
+
+    @Test
+    public void testMedianFinder2() {
+        MedianFinder medianFinder = new MedianFinder();
+        medianFinder.addNum(-1);
+        System.out.println(medianFinder.list + "=>" + medianFinder.findMedian());
+        medianFinder.addNum(-2);
+        System.out.println(medianFinder.list + "=>" + medianFinder.findMedian());
+        medianFinder.addNum(-3);
+        System.out.println(medianFinder.list + "=>" + medianFinder.findMedian());
+        medianFinder.addNum(-4);
+        System.out.println(medianFinder.list + "=>" + medianFinder.findMedian());
+        medianFinder.addNum(-5);
+        System.out.println(medianFinder.list + "=>" + medianFinder.findMedian());
+    }
+
+    @Test
+    public void testMaxSlidingWindow() {
+        int[] nums = {1, 3, -1, -3, 5, 3, 6, 7};
+        int[] maxArr = b.maxSlidingWindow(nums, 3);
+        System.out.println(StringUtils.join(maxArr,","));
+
+
+        maxArr = b.maxSlidingWindow(new int[]{}, 0);
+        System.out.println(StringUtils.join(maxArr,","));
+
     }
 }
