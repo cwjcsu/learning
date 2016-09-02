@@ -393,11 +393,43 @@ public class BatchTest {
     public void testMaxSlidingWindow() {
         int[] nums = {1, 3, -1, -3, 5, 3, 6, 7};
         int[] maxArr = b.maxSlidingWindow(nums, 3);
-        System.out.println(StringUtils.join(maxArr,","));
-
+        System.out.println(StringUtils.join(maxArr, ","));
 
         maxArr = b.maxSlidingWindow(new int[]{}, 0);
-        System.out.println(StringUtils.join(maxArr,","));
+        System.out.println(StringUtils.join(maxArr, ","));
+    }
 
+    @Test
+    public void testSearchRange() {
+        int[] nums = new int[]{5, 7, 7, 8, 8, 10};
+        int[] ret = b.searchRange(nums, 8);
+        System.out.println(StringUtils.join(ret, ","));//[3,4]
+
+        ret = b.searchRange(nums, 7);
+        System.out.println(StringUtils.join(ret, ","));//[1,2]
+
+        nums = new int[]{7, 7, 7, 7, 7, 8};
+        ret = b.searchRange(nums, 7);
+        System.out.println(StringUtils.join(ret, ","));
+
+        nums = new int[]{2,2};
+        ret = b.searchRange(nums, 1);
+        System.out.println(StringUtils.join(ret, ","));//[-1,-1]
+
+        nums = new int[]{2,2,3};
+        ret = b.searchRange(nums, 1);
+        System.out.println(StringUtils.join(ret, ","));
+
+        nums = new int[]{1,3};
+        ret = b.searchRange(nums, 1);
+        System.out.println(StringUtils.join(ret, ","));
+
+        nums = new int[]{2,2};
+        ret = b.searchRange(nums, 3);
+        System.out.println(StringUtils.join(ret, ","));//[-1,-1]
+
+        nums = new int[]{2,3};
+        ret = b.searchRange(nums, 3);
+        System.out.println(StringUtils.join(ret, ","));//[1,1]
     }
 }

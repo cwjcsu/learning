@@ -2755,7 +2755,7 @@ public class Batch {
     /**
      * 239. Sliding Window Maximum
      * 复杂度O(n*k)
-     *
+     * <p>
      * OK
      *
      * @param nums
@@ -2817,6 +2817,7 @@ public class Batch {
 
     /**
      * 76. Minimum Window Substring
+     *
      * @param s
      * @param t
      * @return
@@ -2824,5 +2825,67 @@ public class Batch {
     public String minWindow(String s, String t) {
         return null;
     }
+
+    /**
+     * 34. Search for a Range
+     *
+     * 二分搜索，O(lg(n))，边界条件比较复杂
+     *
+     * @param nums
+     * @param target
+     * @return
+     */
+    public int[] searchRange(int[] nums, int target) {
+        int l = 0;
+        int r = nums.length;
+        int m = 0;
+        while (l <= r) {
+            m = (l + r) / 2;
+            if (m >= nums.length) {
+                return new int[]{-1, -1};
+            }
+            if (nums[m] < target) {
+                l = m + 1;
+            } else if (nums[m] > target) {
+                r = m - 1;
+            } else {
+                l = r = m;
+                break;
+            }
+        }
+        if (l != r || l != m) {
+            l = r = -1;
+        } else {
+            l = r = m;
+            while (r < nums.length - 1) {
+                if (nums[r + 1] == target) {
+                    r++;
+                } else {
+                    break;
+                }
+            }
+            while (l > 0) {
+                if (nums[l - 1] == target) {
+                    l--;
+                } else {
+                    break;
+                }
+            }
+        }
+        return new int[]{l, r};
+    }
+
+    /**
+     * 229. Majority Element II
+     * @param nums
+     * @return
+     */
+    public List<Integer> majorityElement2(int[] nums) {
+        List<Integer> list = new ArrayList<Integer>();
+
+        return list;
+    }
+
+
 
 }
