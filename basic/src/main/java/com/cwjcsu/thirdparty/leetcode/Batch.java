@@ -2828,7 +2828,7 @@ public class Batch {
 
     /**
      * 34. Search for a Range
-     *
+     * <p>
      * 二分搜索，O(lg(n))，边界条件比较复杂
      *
      * @param nums
@@ -2877,6 +2877,7 @@ public class Batch {
 
     /**
      * 229. Majority Element II
+     *
      * @param nums
      * @return
      */
@@ -2886,6 +2887,112 @@ public class Batch {
         return list;
     }
 
+
+    /**
+     * 274
+     * OK,
+     * 排序后的算法复杂度O(n)
+     *
+     * @param citations
+     * @return
+     */
+    public int hIndex(int[] citations) {
+        Arrays.sort(citations);
+        int maxH = 0;
+        for (int i = 0; i < citations.length; i++) {
+            int h = citations.length - i;
+            if (h >= citations[i]) {
+                maxH = citations[i];
+            } else {// h <citations[i]
+                maxH = Math.max(h, maxH);
+            }
+        }
+        return maxH;
+    }
+
+    /**
+     * 275. H-Index II
+     * 已经排序，要求算法复杂度为O(lg n)
+     * <p>
+     * 二分查找
+     * <p>
+     * OK
+     *
+     * @param citations
+     * @return
+     */
+    public int hIndex2(int[] citations) {
+        if (citations.length == 0) {
+            return 0;
+        }
+        int maxH = 0;
+        int l = 0, r = citations.length, m = 0;
+        while (l <= r) {
+            m = (l + r) / 2;
+            if (m >= citations.length) {
+                break;
+            }
+            int h = citations.length - m;
+            if (h >= citations[m]) {
+                maxH = Math.max(maxH, citations[m]);
+                l = m + 1;
+            } else {
+                maxH = Math.max(h, maxH);
+                r = m - 1;
+            }
+        }
+        return maxH;
+    }
+
+    /**
+     * 46. Permutations
+     * <p>
+     * 求全排列。
+     * 算法思想：递归的思想，假设result数组中已经保存了前面k-1个数的全排列，那么当新加一个数字时，可以这样生成新的所有排列：
+     * 对数组中的每一个排列l，把数字分别插入到l中的位置i(i=0~size(l))，形成size(l)+1个新的数组，这些都是k个数的排列。
+     *
+     * @param nums
+     * @return
+     */
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        result.add(new ArrayList<Integer>());
+        for (int i = 0; i < nums.length; i++) {
+            List<List<Integer>> current = new ArrayList<List<Integer>>();
+            for (List<Integer> l : result) {
+                for (int j = 0; j <= l.size(); j++) {
+                    List<Integer> newList = new ArrayList<Integer>(l);
+                    newList.add(j, nums[i]);
+                    current.add(newList);
+                }
+            }
+            result = current;
+        }
+        return result;
+    }
+
+    /**
+     * 47. Permutations II
+     * 同46,用Set过滤重复数组，效率可能比较低，但算法思想很简单
+     *
+     * @param nums
+     */
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        List<List<Integer>> result = new ArrayList<List<Integer>>();
+        result.add(new ArrayList<Integer>());
+        for (int i = 0; i < nums.length; i++) {
+            Set<List<Integer>> current = new HashSet<List<Integer>>();
+            for (List<Integer> l : result) {
+                for (int j = 0; j <= l.size(); j++) {
+                    List<Integer> newList = new ArrayList<Integer>(l);
+                    newList.add(j, nums[i]);
+                    current.add(newList);
+                }
+            }
+            result = new ArrayList<List<Integer>>(current);
+        }
+        return result;
+    }
 
 
 }

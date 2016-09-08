@@ -7,6 +7,8 @@ import org.junit.Test;
 
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -412,24 +414,81 @@ public class BatchTest {
         ret = b.searchRange(nums, 7);
         System.out.println(StringUtils.join(ret, ","));
 
-        nums = new int[]{2,2};
+        nums = new int[]{2, 2};
         ret = b.searchRange(nums, 1);
         System.out.println(StringUtils.join(ret, ","));//[-1,-1]
 
-        nums = new int[]{2,2,3};
+        nums = new int[]{2, 2, 3};
         ret = b.searchRange(nums, 1);
         System.out.println(StringUtils.join(ret, ","));
 
-        nums = new int[]{1,3};
+        nums = new int[]{1, 3};
         ret = b.searchRange(nums, 1);
         System.out.println(StringUtils.join(ret, ","));
 
-        nums = new int[]{2,2};
+        nums = new int[]{2, 2};
         ret = b.searchRange(nums, 3);
         System.out.println(StringUtils.join(ret, ","));//[-1,-1]
 
-        nums = new int[]{2,3};
+        nums = new int[]{2, 3};
         ret = b.searchRange(nums, 3);
         System.out.println(StringUtils.join(ret, ","));//[1,1]
+    }
+
+    @Test
+    public void testHIndex() {
+        int[] citations = new int[]{3, 0, 6, 1, 5};
+        System.out.println(b.hIndex(citations));//3
+
+        citations = new int[]{100, 1};
+        System.out.println(b.hIndex(citations));//1
+
+        citations = new int[]{100};
+        System.out.println(b.hIndex(citations));//1
+
+
+        citations = new int[]{100, 2};
+        System.out.println(b.hIndex(citations));//2
+    }
+
+    @Test
+    public void testHIndex2() {
+        int[] citations = new int[]{3, 0, 6, 1, 5};
+        Arrays.sort(citations);
+        System.out.println(b.hIndex2(citations));//3
+
+        citations = new int[]{100, 1};
+        Arrays.sort(citations);
+        System.out.println(b.hIndex2(citations));//1
+
+        citations = new int[]{100};
+        Arrays.sort(citations);
+        System.out.println(b.hIndex2(citations));//1
+
+
+        citations = new int[]{100, 2};
+        Arrays.sort(citations);
+        System.out.println(b.hIndex2(citations));//2
+
+
+        citations = new int[]{100, 1, 100, 100, 100, 100, 100, 100, 100};
+        Arrays.sort(citations);
+        System.out.println(b.hIndex2(citations));//2
+
+        citations = new int[]{0};
+        Arrays.sort(citations);
+        System.out.println(b.hIndex2(citations));//0
+    }
+
+    @Test
+    public void testPermute() {
+        int[] nums = new int[]{1,2,3};
+        List<List<Integer>> list = b.permute(nums);
+        System.out.println(list);
+
+        nums = new int[]{1,2,3,4};
+        list = b.permute(nums);
+        System.out.println(list);
+
     }
 }
