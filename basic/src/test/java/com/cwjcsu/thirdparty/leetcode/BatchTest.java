@@ -482,13 +482,98 @@ public class BatchTest {
 
     @Test
     public void testPermute() {
-        int[] nums = new int[]{1,2,3};
+        int[] nums = new int[]{1, 2, 3};
         List<List<Integer>> list = b.permute(nums);
         System.out.println(list);
 
-        nums = new int[]{1,2,3,4};
+        nums = new int[]{1, 2, 3, 4};
         list = b.permute(nums);
         System.out.println(list);
+    }
 
+    @Test
+    public void testFindMin() {
+        int[] nums = new int[]{4, 5, 6, 7, 0, 1, 2};
+        System.out.println(b.findMin(nums));
+
+        nums = new int[]{1, 2, 4, 5, 6, 7, 0};
+        System.out.println(b.findMin(nums));
+
+        nums = new int[]{7, 0, 1, 2, 4, 5, 6};
+        System.out.println(b.findMin(nums));
+
+        nums = new int[]{7, 0};
+        System.out.println(b.findMin(nums));
+
+
+        nums = new int[]{7, 0, 1};
+        System.out.println(b.findMin(nums));
+
+
+        nums = new int[]{1, 7, 0};
+        System.out.println(b.findMin(nums));
+
+        nums = new int[]{0, 1, 7};
+        System.out.println(b.findMin(nums));
+
+        nums = new int[]{2, 3, 4, 5, 1};
+        System.out.println(b.findMin(nums));
+    }
+
+    @Test
+    public void testFindMinWithDuplicates() {
+        int[] nums = new int[]{2, 2, 7, 7, 0, 0, 2};
+        System.out.println(b.findMinWithDuplicates(nums));
+
+        nums = new int[]{1, 1, 1};
+        System.out.println(b.findMinWithDuplicates(nums));
+    }
+
+    @Test
+    public void testSearch() {
+        int[] nums = new int[]{4, 5, 6, 7, 0, 1, 2};
+        System.out.println(b.search(nums, 7));//3
+
+        nums = new int[]{1, 2, 4, 5, 6, 7, 0};
+        System.out.println(b.search(nums, 7));//5
+
+        nums = new int[]{7, 0, 1, 2, 4, 5, 6};
+        System.out.println(b.search(nums, 7));//0
+
+        nums = new int[]{7, 0};
+        System.out.println(b.search(nums, 7));//0
+
+
+        nums = new int[]{7, 0, 1};
+        System.out.println(b.search(nums, 7));//0
+
+
+        nums = new int[]{1, 7, 0};
+        System.out.println(b.search(nums, 7));//1
+
+        nums = new int[]{0, 1, 7};
+        System.out.println(b.search(nums, 7));//2
+
+        nums = new int[]{2, 3, 4, 5, 1};
+        System.out.println(b.search(nums, 7));//-1
+
+        nums = new int[]{4, 5, 6, 7, 0, 1, 2};
+        System.out.println(b.search(nums, 0));//4
+
+
+        nums = new int[]{3, 5, 1};
+        System.out.println(b.search(nums, 2));//-1
+
+        nums = new int[]{3, 5, 1};
+        System.out.println(b.search(nums, 4));//-1
+
+        nums = new int[]{5, 7, 1, 3, 4};
+        System.out.println(b.search(nums, 2));//-1
+
+        nums = new int[]{1, 2, 3, 4, 5, 6};
+        System.out.println(b.search(nums, 4));//3
+
+        nums = new int[]{5, 1, 2, 3, 4};
+        System.out.println(b.search(nums, 1));//2
     }
 }

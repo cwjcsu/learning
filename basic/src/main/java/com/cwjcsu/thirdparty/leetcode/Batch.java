@@ -2995,4 +2995,168 @@ public class Batch {
     }
 
 
+    /**
+     * 153. Find Minimum in Rotated Sorted Array
+     *
+     * @param nums
+     * @return
+     */
+    public int findMin(int[] nums) {
+        if (nums.length == 1) {
+            return nums[0];
+        } else if (nums.length == 2) {
+            return Math.min(nums[0], nums[1]);
+        }
+        int l = 0, r = nums.length - 1, m = (l + r) / 2;
+        int leftMost = nums[0];
+        int rightMost = nums[nums.length - 1];
+        if (leftMost < rightMost) {
+            return leftMost;
+        }
+        while (l <= r) {
+            m = (l + r) / 2;
+            if (l == r) {
+                break;
+            }
+            if (nums[l] < nums[m] && leftMost <= nums[l]) {//Xl,Xm在左支上升区间（Xr可在左支也可在右支）
+                l = m + 1;
+            } else if (nums[m] < nums[r] && nums[r] <= rightMost) {//Xm,Xr在右支上升区间（Xl可在左支也可以在右支)
+                r = m - 1;
+                if (nums[r] > nums[m]) {
+                    break;
+                }
+            } else if (nums[m] > nums[r]) {//Xm在左支，Xr在右支，没有进入第一个分支，意味着Xl==Xm
+                l = m + 1;
+            }
+        }
+        return nums[m];
+    }
+
+
+    /**
+     * 154. Find Minimum in Rotated Sorted Array II
+     * <p>
+     * 分支太多，不做了
+     *
+     * @param nums
+     * @return
+     */
+    public int findMinWithDuplicates(int[] nums) {
+        if (nums.length == 1) {
+            return nums[0];
+        } else if (nums.length == 2) {
+            return Math.min(nums[0], nums[1]);
+        }
+        int l = 0, r = nums.length - 1, m = (l + r) / 2;
+        int leftMost = nums[0];
+        int rightMost = nums[nums.length - 1];
+        while (l <= r) {
+            m = (l + r) / 2;
+            if (l == r) {
+                break;
+            }
+            if (nums[l] <= nums[m] && leftMost <= nums[l]) {//Xl,Xm在左支上升区间（Xr可在左支也可在右支）
+                if (nums[l] < nums[m]) {
+                    l = m + 1;
+                } else {
+                    l = m;
+                }
+            } else if (nums[m] <= nums[r] && nums[r] <= rightMost) {//Xm,Xr在右支上升区间（Xl可在左支也可以在右支)
+                if (nums[m] < nums[r]) {
+                    r = m - 1;
+                } else {
+                    r = m;
+                }
+                if (nums[r] > nums[m]) {
+                    break;
+                }
+            } else if (nums[m] > nums[r]) {//Xm在左支，Xr在右支，没有进入第一个分支，意味着Xl==Xm
+                l = m;
+            }
+        }
+        return nums[m];
+    }
+
+    /**
+     * 33. Search in Rotated Sorted Array
+     * <p>
+     * 马勒戈壁。
+     *
+     * @param nums
+     * @param target
+     * @return
+     */
+    public int search(int[] nums, int target) {
+        if (nums.length == 1) {
+            return nums[0] == target ? 0 : -1;
+        } else if (nums.length == 2) {
+            if (nums[0] == target) {
+                return 0;
+            } else if (nums[1] == target) {
+                return 1;
+            }
+            return -1;
+        }
+        int l = 0, r = nums.length - 1, m = 0;
+        int leftMost = nums[0];
+        int rightMost = nums[nums.length - 1];
+        if (leftMost == target) {
+            return 0;
+        } else if (rightMost == target) {
+            return nums.length - 1;
+        }
+
+        if (leftMost < rightMost) {//有序数组的二分法，很简单
+            while (l <= r) {
+                m = (l + r) / 2;
+                if (nums[m] == target) {
+                    return m;
+                }
+                if (l == r) {
+                    break;
+                }
+                if (nums[m] > target) {
+                    r = m - 1;
+                } else if (nums[m] < target) {
+                    l = m + 1;
+                }
+            }
+        } else {//旋转的有序数组
+            if (target > rightMost && target < leftMost) {//target必然不在数组中
+                return -1;
+            }
+            boolean left = target > leftMost;//target在左支(left=true)或者右支(left=false)
+            while (l <= r) {
+                m = (l + r) / 2;
+                if (nums[m] == target) {
+                    return m;
+                }
+                boolean mLeft = nums[m] >= leftMost;//Xm在左支或者右支
+                if (left) {
+                    if (mLeft) {
+                        if (nums[m] < target) {
+                            l = m + 1;
+                        } else {
+                            r = m - 1;
+                        }
+                    } else {
+                        r = m - 1;
+                    }
+                } else {
+                    if (mLeft) {
+                        l = m + 1;
+                    } else {
+                        if (nums[m] < target) {
+                            l = m + 1;
+                            continue;
+                        } else {
+                            r = m - 1;
+                        }
+                    }
+                }
+            }
+        }
+        return -1;
+    }
+
 }
