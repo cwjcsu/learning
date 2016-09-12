@@ -351,6 +351,8 @@ public class Batch {
 
     /**
      * 112
+     * <p>
+     * OK
      *
      * @param root
      * @param sum
@@ -398,6 +400,114 @@ public class Batch {
         }
         return false;
     }
+
+    /**
+     * 113
+     *
+     * @param root
+     * @param sum
+     * @return
+     */
+    public List<List<Integer>> pathSum(final TreeNode root, final int sum) {
+        List<List<Integer>> list = new ArrayList<List<Integer>>();
+        Stack<Integer> currentPath = new Stack<Integer>();
+        pathSum(root, currentPath, sum, list);
+        return list;
+    }
+
+    private void pathSum(final TreeNode currentRoot, Stack<Integer> currentPath, int remainSum, List<List<Integer>> list) {
+        if (currentRoot == null) {
+            return;
+        }
+        currentPath.push(currentRoot.val);
+        if (currentRoot.left == null && currentRoot.right == null && remainSum == currentRoot.val) {
+            List<Integer> path = Arrays.asList(currentPath.toArray(new Integer[currentPath.size()]));
+            list.add(path);
+        }
+        if (currentRoot.left != null) {
+            pathSum(currentRoot.left, currentPath, remainSum - currentRoot.val, list);
+        }
+        if (currentRoot.right != null) {
+            pathSum(currentRoot.right, currentPath, remainSum - currentRoot.val, list);
+        }
+        currentPath.pop();
+    }
+
+
+    /**
+     * 257. Binary Tree Paths
+     * OK
+     *
+     * @param root
+     * @return
+     */
+    public List<String> binaryTreePaths(TreeNode root) {
+        List<String> paths = new ArrayList<String>();
+        binaryTreePaths(root, null, paths);
+        return paths;
+    }
+
+    public void binaryTreePaths(TreeNode root, String path, List<String> paths) {
+        if (root == null) {
+            return;
+        }
+        if (path == null || path.length() == 0) {
+            path = "" + root.val;
+        } else {
+            path += "->" + root.val;
+        }
+        if (root.left == null && root.right == null) {
+            paths.add(path);
+            return;
+        }
+        if (root.left != null) {
+            binaryTreePaths(root.left, path, paths);
+        }
+        if (root.right != null) {
+            binaryTreePaths(root.right, path, paths);
+        }
+    }
+
+
+    /**
+     * 105. Construct Binary Tree from Preorder and Inorder Traversal
+     *
+     *  NOT OK
+     *
+     *  思路：需要用递归法
+     *
+     * @param preorder
+     * @param inorder
+     * @return
+     */
+    public TreeNode buildTree(int[] preorder, int[] inorder) {
+        Map<Integer, Integer> indexMap = new HashMap<Integer, Integer>();
+        for (int i = 0; i < inorder.length; i++) {
+            indexMap.put(inorder[i], i);
+        }
+        TreeNode root = null;
+        TreeNode currentRoot = null;
+        for (int i = 0; i < preorder.length; i++) {
+            int d = preorder[i];
+            TreeNode current = new TreeNode(d);
+            if (root == null) {
+                root = current;
+                currentRoot = root;
+                continue;
+            }
+            Integer index = indexMap.get(currentRoot.val);
+            Integer index2 = indexMap.get(d);
+            if (index2 < index) {
+                currentRoot.left = current;
+                currentRoot = current;
+            }else{
+                currentRoot.right = current;
+                currentRoot = current;
+            }
+        }
+        return root;
+    }
+
 
     /**
      * 119
@@ -748,39 +858,6 @@ public class Batch {
             next = next.next;
         }
         return true;
-    }
-
-    /**
-     * 257
-     *
-     * @param root
-     * @return
-     */
-    public List<String> binaryTreePaths(TreeNode root) {
-        List<String> paths = new ArrayList<String>();
-        binaryTreePaths(root, null, paths);
-        return paths;
-    }
-
-    public void binaryTreePaths(TreeNode root, String path, List<String> paths) {
-        if (root == null) {
-            return;
-        }
-        if (path == null || path.length() == 0) {
-            path = "" + root.val;
-        } else {
-            path += "->" + root.val;
-        }
-        if (root.left == null && root.right == null) {
-            paths.add(path);
-            return;
-        }
-        if (root.left != null) {
-            binaryTreePaths(root.left, path, paths);
-        }
-        if (root.right != null) {
-            binaryTreePaths(root.right, path, paths);
-        }
     }
 
     /**

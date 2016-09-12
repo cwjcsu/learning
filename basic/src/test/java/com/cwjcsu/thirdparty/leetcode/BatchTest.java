@@ -576,4 +576,25 @@ public class BatchTest {
         nums = new int[]{5, 1, 2, 3, 4};
         System.out.println(b.search(nums, 1));//2
     }
+
+    public static TreeNode TN(int x) {
+        return new TreeNode(x);
+    }
+
+    public static TreeNode TN(int val, TreeNode left, TreeNode right) {
+        return new TreeNode(val, left, right);
+    }
+
+    @Test
+    public void testPathSum() {
+        TreeNode root = TN(5, TN(4, TN(11, TN(7), TN(2)), null), TN(8, TN(13), TN(4, TN(5), TN(1))));
+        List<List<Integer>> list = b.pathSum(root, 22);
+        System.out.println(list);
+    }
+
+    @Test
+    public void testBuildTree(){
+        TreeNode root = b.buildTree(new int[]{1, 2, 4, 3, 5, 6, 7}, new int[]{2, 4, 1, 5, 3, 7, 6});
+        System.out.println(root);
+    }
 }

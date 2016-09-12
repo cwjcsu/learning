@@ -23,6 +23,15 @@ public class TreeNode {
         this.right = right;
     }
 
+
+    public static TreeNode _(int x) {
+        return new TreeNode(x);
+    }
+
+    public static TreeNode _(int val, TreeNode left, TreeNode right) {
+        return new TreeNode(val, left, right);
+    }
+
     @Override
     public String toString() {
         if (left == null && right == null) {
