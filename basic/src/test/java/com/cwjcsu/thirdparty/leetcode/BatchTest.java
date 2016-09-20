@@ -593,8 +593,11 @@ public class BatchTest {
     }
 
     @Test
-    public void testBuildTree(){
+    public void testBuildTree() {
         TreeNode root = b.buildTree(new int[]{1, 2, 4, 3, 5, 6, 7}, new int[]{2, 4, 1, 5, 3, 7, 6});
+        System.out.println(root);
+
+        root = b.buildTree(new int[]{1, 2, 3}, new int[]{2, 1, 3});
         System.out.println(root);
     }
 }

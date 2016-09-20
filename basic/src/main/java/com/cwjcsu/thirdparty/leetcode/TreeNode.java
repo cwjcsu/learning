@@ -37,6 +37,6 @@ public class TreeNode {
         if (left == null && right == null) {
             return String.valueOf(val);
         }
-        return "(" + val + "," + (left != null ? left : "") + "," + (right != null ? right : "") + ")";
+        return "(" + val + ((left != null || right != null) ? ":" : "") + (left != null ? left : "") + "," + (right != null ? right : "") + ")";
     }
 }

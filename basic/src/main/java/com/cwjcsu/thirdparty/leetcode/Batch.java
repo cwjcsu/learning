@@ -471,41 +471,76 @@ public class Batch {
 
     /**
      * 105. Construct Binary Tree from Preorder and Inorder Traversal
-     *
-     *  NOT OK
-     *
-     *  思路：需要用递归法
+     * <p>
+     * NOT OK
+     * <p>
+     * 思路：需要用递归法
      *
      * @param preorder
      * @param inorder
      * @return
      */
     public TreeNode buildTree(int[] preorder, int[] inorder) {
+        if (preorder == null || preorder.length == 0) {
+            return null;
+        }
         Map<Integer, Integer> indexMap = new HashMap<Integer, Integer>();
+        LinkedList<Integer> preorderList = new LinkedList<Integer>();
         for (int i = 0; i < inorder.length; i++) {
             indexMap.put(inorder[i], i);
+            preorderList.add(preorder[i]);
         }
         TreeNode root = null;
-        TreeNode currentRoot = null;
-        for (int i = 0; i < preorder.length; i++) {
-            int d = preorder[i];
-            TreeNode current = new TreeNode(d);
-            if (root == null) {
-                root = current;
-                currentRoot = root;
-                continue;
-            }
-            Integer index = indexMap.get(currentRoot.val);
-            Integer index2 = indexMap.get(d);
-            if (index2 < index) {
-                currentRoot.left = current;
-                currentRoot = current;
-            }else{
-                currentRoot.right = current;
-                currentRoot = current;
-            }
+        if (preorderList.size() > 0) {
+            root = new TreeNode(preorderList.removeFirst());
+            int index = indexMap.get(root.val);
+            buildTree(root, preorderList, 0, index, indexMap);
+            buildTree(root, preorderList, index, inorder.length - 1, indexMap);
         }
         return root;
+    }
+
+    /**
+     * 以root为根的节点的index范围是[from,to]。这个方法负责构造root下面的完整的树
+     *
+     * @param root
+     * @param next
+     * @param from
+     * @param to
+     * @param indexMap
+     */
+    private void buildTree(TreeNode root, LinkedList<Integer> next, final int from, final int to, Map<Integer, Integer> indexMap) {
+        if (from > to || root == null) {
+            return;
+        }
+        int rootIndex = indexMap.get(root.val);
+        Integer v = next.size() > 0 ? next.removeFirst() : null;
+        if (v != null) {
+            int index = indexMap.get(v);
+            if (index < from || index > to) {//下一个节点在当前区间外面，则不属于当前树，返回
+                next.addFirst(v);
+                return;
+            }
+            TreeNode childNode = new TreeNode(v);
+            if (index < rootIndex) {//意味着节点v在root的左边
+                root.left = childNode;
+                buildTree(childNode, next, from, rootIndex, indexMap);//递归调用，构造左子树
+                childNode = null;
+                if (next.size() > 0) {
+                    v = next.removeFirst();
+                    index = indexMap.get(v);
+                    if (index >= from && index <= to) {//下一个节点还在当前范围内
+                        childNode = new TreeNode(v);
+                    } else {//不在当前范围内，回退
+                        next.addFirst(v);
+                    }
+                }
+            }
+            if (childNode != null) {//还有多余节点，构造右子树
+                root.right = childNode;
+                buildTree(childNode, next, rootIndex, to, indexMap);
+            }
+        }
     }
 
 
