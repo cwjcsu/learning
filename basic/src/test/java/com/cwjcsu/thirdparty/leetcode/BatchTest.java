@@ -2,6 +2,7 @@ package com.cwjcsu.thirdparty.leetcode;
 
 import com.cwjcsu.common.FileUtils;
 import com.cwjcsu.common.StringUtils;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -599,5 +600,19 @@ public class BatchTest {
 
         root = b.buildTree(new int[]{1, 2, 3}, new int[]{2, 1, 3});
         System.out.println(root);
+    }
+
+    @Test
+    public void testLongestPalindrome(){
+        Assert.assertEquals(7,b.longestPalindrome("abccccdd"));
+    }
+
+    @Test
+    public void testConvertToTitle(){
+        Assert.assertEquals("AB", b.convertToTitle(28));
+        Assert.assertEquals("AX", b.convertToTitle(50));
+        Assert.assertEquals("AZ", b.convertToTitle(52));
+        Assert.assertEquals("BD", b.convertToTitle(56));
+        Assert.assertEquals("DV", b.convertToTitle(126));
     }
 }

@@ -1020,13 +1020,15 @@ public class Batch {
      */
     public String convertToTitle(int n) {
         String s = "";
-        while (n - 1 >= 0) {
-            char c = (char) ((n - 1) % 26 + 'A');
+        while (n > 0) {
+            int k = n % 26;
+            char c = k == 0 ? 'Z' : (char) ('A' + k - 1);
             s = c + s;
-            if (n <= 26) {
-                break;
+            n = n - k;
+            n = n / 26;
+            if (k == 0) {
+                n--;
             }
-            n = n % 26 == 0 ? (n / 26) : (n / 26 + 1);
         }
         return s;
     }
@@ -3271,4 +3273,26 @@ public class Batch {
         return -1;
     }
 
+    /**
+     * 409. Longest Palindrome
+     *
+     * @param s
+     * @return
+     */
+    public int longestPalindrome(String s) {
+        Set<Character> characters = new HashSet<Character>();
+        int count = 0;
+        for (int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if (characters.remove((Character) c)) {
+                count += 2;
+            } else {
+                characters.add(c);
+            }
+        }
+        if (characters.size() > 0) {
+            count++;
+        }
+        return count;
+    }
 }
